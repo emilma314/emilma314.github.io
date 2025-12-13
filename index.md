@@ -3,24 +3,14 @@ layout: page
 title: Home
 ---
 
-# Gravitational Waves and Strain
+# Emil Ma
 
-This project explores **gravitational-wave strain** using real LIGO
-time-series data. Because detector noise dominates the raw signal,
-we apply signal-processing techniques to reveal astrophysical events.
+I’m interested in physics, computation, and applied mathematics, with a
+focus on understanding complex systems through data and theory.
 
-## Site Map
+## Projects
 
-- [What Is Strain?](pages/strain)
-- [The LIGO Data](pages/data)
-- [Analysis & Visualizations](pages/analysis)
+- **[Gravitational Waves and Strain](gravitational-waves-project/)**
+  Visualization and analysis of LIGO gravitational-wave data.
 
-## Core Equation
-
-A passing gravitational wave produces a fractional change in length:
-
-\[
-h(t) = \frac{\Delta L(t)}{L}
-\]
-
-Typical observed strains are on the order of \(10^{-21}\).
+(More projects coming.)
