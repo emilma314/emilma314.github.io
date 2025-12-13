@@ -1,0 +1,7 @@
+title: Gravitational Waves and Strain
+description: Exploring LIGO gravitational-wave data
+theme: minima
+markdown: kramdown
+
+kramdown:
+  math_engine: mathjax
