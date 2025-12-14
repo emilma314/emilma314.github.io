@@ -8,10 +8,12 @@ title: Gravitational Waves Project
 ## What Are Gravitational Waves?
 
 Gravitational waves (GWs) are ripples in spacetime produced by accelerating masses, analogous to how accelerating electric charges produce electromagnetic waves. They were first predicted by **Albert Einstein** in 1916 as part of General Relativity.
+![Simulation of a Gravitational Wave](assets/images/ligo_interferometer.jpg)
+
 
 ### Historical Notes
 - First indirect evidence: Hulse and Taylor binary pulsar (1974)
-- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation E=mc^2. 
+- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation $E=mc^2$. 
 
 ### How LIGO Detects Gravitational Waves
 
@@ -30,9 +32,9 @@ recombined. When the arm lengths change, the returning light waves shift
 out of phase, producing an interference pattern that is measured as
 **strain**:
 
-\[
+\(
 h(t) = \frac{\Delta L(t)}{L}
-\]
+\)
 
 For astrophysical sources, the measured strain is extremely small,
 typically on the order of \(10^{-21}\).
@@ -50,7 +52,7 @@ the key steps used to identify the signal from detector noise.
 
 The raw strain shows the detector output over time. Noise dominates the signal, so preprocessing is necessary.
 
-![Raw Strain](assets/plots/raw_strain.png)  <!-- your saved figure -->
+![Raw Strain](assets/plots/strain_time.png)  <!-- your saved figure -->
 
 **Explanation:**  
 - x-axis: time (s) around the merger  
@@ -77,8 +79,8 @@ ASD shows the frequency content of the strain data.
 
 Whitening removes frequency-dependent noise.
 
-![Roughly Whitened](assets/plots/whitened_rough.png)  
-![GWpy Whitened](assets/plots/whitened_gwpy.png)
+![Roughly Whitened](assets/plots/rough_white.png)  
+![GWpy Whitened](assets/plots/GWpy_white.png)
 
 **Explanation:**  
 - Flattened spectrum makes the signal more visible  
@@ -117,7 +119,7 @@ Bandpass isolates the frequency range of interest.
 
 We can approximate the GW frequency evolution with a simple model.
 
-![Analytic Model Frequency](assets/plots/analytic_model.png)  
+![Analytic Model Frequency](assets/plots/simple_analytic_model.png)  
 ![Q-Transform Scatter Projection](assets/plots/qtransform_scatter.png)
 
 **Explanation:**  
