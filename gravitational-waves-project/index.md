@@ -11,17 +11,38 @@ Gravitational waves (GWs) are ripples in spacetime produced by accelerating mass
 
 ### Historical Notes
 - First indirect evidence: Hulse and Taylor binary pulsar (1974)
-- First direct detection: **GW150914** by LIGO (2015)
-- GW astronomy opens a new window to observe black hole and neutron star mergers.
+- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation E=mc^2. 
 
-### Illustrations
-*(Insert relevant images here, e.g., spacetime ripple diagram, LIGO interferometer schematic)*
+### How LIGO Detects Gravitational Waves
 
----
+![Diagram of the LIGO interferometer](assets/images/ligo_interferometer.jpg)
+
+The Laser Interferometer Gravitational-Wave Observatory (LIGO) detects
+gravitational waves using a Michelson interferometer with two
+perpendicular arms, each 4 km long.
+
+A passing gravitational wave stretches spacetime in one direction while
+compressing it in the perpendicular direction. As a result, the relative
+lengths of LIGO’s two arms change by a tiny amount.
+
+Laser light is split and sent down both arms, reflected by mirrors, and
+recombined. When the arm lengths change, the returning light waves shift
+out of phase, producing an interference pattern that is measured as
+**strain**:
+
+\[
+h(t) = \frac{\Delta L(t)}{L}
+\]
+
+For astrophysical sources, the measured strain is extremely small,
+typically on the order of \(10^{-21}\).
+
 
 # Project: Analyzing GW150914 Data
 
-In this project, we analyze LIGO’s H1 detector data for the GW150914 event. The goal is to visualize strain, characterize the signal, and compare with simple analytic models.
+In the following sections, I analyze publicly available LIGO strain data
+from the first detected gravitational-wave event, GW150914, and recreate
+the key steps used to identify the signal from detector noise.
 
 ---
 
