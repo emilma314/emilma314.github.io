@@ -5,6 +5,7 @@ title: Gravitational Waves Project
 
 # Gravitational Waves: Physics and Observation
 
+{% raw %}
 Inline math test: \( E = mc^2 \)
 
 Display math test:
@@ -12,6 +13,7 @@ Display math test:
 $$
 E = mc^2
 $$
+{% endraw %}
 
 ## What Are Gravitational Waves?
 
