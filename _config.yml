@@ -1,7 +1,2 @@
-title: Gravitational Waves and Strain
-description: Exploring LIGO gravitational-wave data
+name: My Site
 theme: minima
-markdown: kramdown
-
-kramdown:
-  math_engine: mathjax
