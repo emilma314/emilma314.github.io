@@ -5,6 +5,14 @@ title: Gravitational Waves Project
 
 # Gravitational Waves: Physics and Observation
 
+Inline math test: \( E = mc^2 \)
+
+Display math test:
+
+$$
+E = mc^2
+$$
+
 ## What Are Gravitational Waves?
 
 Gravitational waves (GWs) are ripples in spacetime produced by accelerating masses, analogous to how accelerating electric charges produce electromagnetic waves. They were first predicted by **Albert Einstein** in 1916 as part of General Relativity.
