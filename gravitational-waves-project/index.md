@@ -50,47 +50,47 @@ the key steps used to identify the signal from detector noise.
 
 ## 1. Raw Strain Time Series
 
-The raw strain shows the detector output over time. Noise dominates the signal, so preprocessing is necessary.
+This plot shows the LIGO strain h(t) over time in a 32-second window centered on the GW150914 event.
 
 ![Raw Strain](assets/plots/strain_time.png)  <!-- your saved figure -->
 
 **Explanation:**  
 - x-axis: time (s) around the merger  
 - y-axis: strain (dimensionless)  
-- Note the spike corresponding to the gravitational-wave event.
+
+The strain measures how much the length of LIGO’s arms changes relative to their original length. In the raw data, the signal is buried in noise from the environment and the detector itself. Though there are several spikes, the gravitational wave cannot be clearly seen at this stage.
 
 ---
 
 ## 2. Amplitude Spectral Density (ASD)
 
-ASD shows the frequency content of the strain data.
+The amplitude spectral density shows how much noise the detector has at each frequency.
 
 ![ASD Full Range](assets/plots/asd_full.png)  
 ![ASD Zoomed](assets/plots/asd_zoom.png)
 
 **Explanation:**  
-- Frequencies <100 Hz dominated by seismic noise  
-- LIGO is most sensitive ~100–300 Hz  
-- Zoomed view highlights the GW signal’s frequency range.
+
+Different frequencies are affected by different noise sources. Low frequencies are dominated by seismic motion, while very high frequencies are limited by the laser light itself. LIGO is most sensitive between about 100 and 300 Hz, which is also where binary black hole mergers emit most strongly.
 
 ---
 
 ## 3. Whitening the Data
 
-Whitening removes frequency-dependent noise.
+Whitening adjusts the data so that noise has roughly the same strength at all frequencies.
 
 ![Roughly Whitened](assets/plots/rough_white.png)  
 ![GWpy Whitened](assets/plots/GWpy_white.png)
 
 **Explanation:**  
-- Flattened spectrum makes the signal more visible  
-- Facilitates further processing like bandpass filtering
+
+After whitening, the background noise looks more uniform, and short-lived signals stand out more clearly in time. The GWpy method produces a cleaner result than a simple manual approach.
 
 ---
 
 ## 4. Q-Transform
 
-The Q-transform shows time-frequency energy of the signal.
+The Q-transform displays how the signal’s energy changes with both time and frequency.
 
 ![Q-Transform](assets/plots/qtransform.png)
 
@@ -98,51 +98,56 @@ The Q-transform shows time-frequency energy of the signal.
 - x-axis: time (s)  
 - y-axis: frequency (Hz)  
 - Color: normalized energy  
-- Shows the "chirp" pattern of increasing frequency as the binary merges
+
+A clear “chirp” pattern appears, where the frequency increases rapidly over time. This behavior is exactly what is expected when two massive objects spiral together and merge.
 
 ---
 
 ## 5. Bandpass Filtering
 
-Bandpass isolates the frequency range of interest.
+A bandpass filter keeps only a selected range of frequencies and removes the rest.
 
 ![Bandpass 32s Window](assets/plots/bandpass_32s.png)  
 ![Bandpass Zoom 0.3s](assets/plots/bandpass_zoom.png)
 
 **Explanation:**  
-- Filters out low-frequency seismic noise and high-frequency artifacts  
-- Short-window zoom shows the GW spike clearly
+
+By keeping frequencies between about 30 and 400 Hz, most of the noise is removed while the gravitational-wave signal remains. The zoomed-in plot clearly shows the short burst of the merger.
 
 ---
 
 ## 6. Analytic Model vs. Data
 
-We can approximate the GW frequency evolution with a simple model.
+An analytic model predicts how the gravitational-wave frequency should change over time for a merging binary system.
 
 ![Analytic Model Frequency](assets/plots/simple_analytic_model.png)  
 ![Q-Transform Scatter Projection](assets/plots/qtransform_scatter.png)
 
 **Explanation:**  
-- Analytic model uses chirp mass and Newtonian/GR approximation  
-- Scatter projection of Q-transform highlights observed signal vs model
+
+The model predicts an increasing frequency as the two black holes approach each other. This trend matches the frequency track extracted from the data using the Q-transform.
 
 ---
 
 ## 7. Fitting an Oscillation Function
 
-We fit a function to the whitened, bandpassed strain.
+We fit an analytic waveform directly to the processed strain data.
 
 ![Function Not Fitted](assets/plots/osc_not_fitted.png)  
 ![Function Fitted](assets/plots/osc_fitted.png)
 
 **Explanation:**  
-- Red line: best-fit analytic function  
-- Matches the peak strain and frequency evolution of the event
+
+The fitted curve closely follows the oscillations and amplitude increase seen in the data near the merger. This indicates that the model captures the key features of the signal.
 
 ---
 
-### Notes / References
+## 8. Conclusion
 
+Starting from noisy interferometer data, this analysis reproduces the key steps used by LIGO to identify GW150914. Through filtering, time-frequency analysis, and modeling, a clear gravitational-wave signal from a binary black hole merger emerges.
+
+### Notes / References
+- MITxT 8.S50.1xComputational Data Science in Physics I
 - LIGO Open Science Center: [https://losc.ligo.org](https://losc.ligo.org)  
 - Analytical approximation references: Blanchet et al., PRL 1995 [link](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.74.3515)
 
