@@ -5,15 +5,7 @@ title: Gravitational Waves Project
 
 # Gravitational Waves: Physics and Observation
 
-{% raw %}
-Inline math test: \( E = mc^2 \)
-
-Display math test:
-
-$$
-E = mc^2
-$$
-{% endraw %}
+Emil Ma, Mentor: Norm Prokup.
 
 ## What Are Gravitational Waves?
 
@@ -23,7 +15,7 @@ Gravitational waves (GWs) are ripples in spacetime produced by accelerating mass
 
 ### Historical Notes
 - First indirect evidence: Hulse and Taylor binary pulsar (1974)
-- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation $E=mc^2$. 
+- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation for energy.  
 
 ### How LIGO Detects Gravitational Waves
 
@@ -40,14 +32,14 @@ lengths of LIGO’s two arms change by a tiny amount.
 Laser light is split and sent down both arms, reflected by mirrors, and
 recombined. When the arm lengths change, the returning light waves shift
 out of phase, producing an interference pattern that is measured as
-**strain**:
+**strain**: how much the detector’s arm lengths change due to a passing gravitational wave.
 
-\(
-h(t) = \frac{\Delta L(t)}{L}
-\)
+It is defined as the change in length of the arms, 
+ΔL(t), divided by the original arm length, 
+L.
 
 For astrophysical sources, the measured strain is extremely small,
-typically on the order of \(10^{-21}\).
+typically on the order of 10^-21.
 
 
 # Project: Analyzing GW150914 Data
@@ -155,6 +147,8 @@ The fitted curve closely follows the oscillations and amplitude increase seen in
 ## 8. Conclusion
 
 Starting from noisy interferometer data, this analysis reproduces the key steps used by LIGO to identify GW150914. Through filtering, time-frequency analysis, and modeling, a clear gravitational-wave signal from a binary black hole merger emerges.
+
+Big thanks again to Norm for guiding through this independent study!
 
 ### Notes / References
 - MITxT 8.S50.1xComputational Data Science in Physics I
