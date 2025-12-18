@@ -3,6 +3,13 @@ layout: page
 title: Gravitational Waves Project
 ---
 
+<div class="hero">
+  <h1>Gravitational Waves</h1>
+  <p class="subtitle">Physics, Detection, and Analysis of GW150914</p>
+  <p class="meta">Emil Ma · Mentor: Norm Prokup</p>
+</div>
+
+
 # Gravitational Waves: Physics and Observation
 
 Emil Ma, Mentor: Norm Prokup.
