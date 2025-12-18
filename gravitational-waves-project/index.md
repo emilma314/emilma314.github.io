@@ -17,7 +17,7 @@ Emil Ma, Mentor: Norm Prokup.
 ## What Are Gravitational Waves?
 
 Gravitational waves (GWs) are ripples in spacetime produced by accelerating masses, analogous to how accelerating electric charges produce electromagnetic waves. They were first predicted by **Albert Einstein** in 1916 as part of General Relativity.
-![Simulation of a Gravitational Wave](assets/images/ligo_interferometer.jpg)
+![Simulation of a Gravitational Wave](assets/images/GravitationalWave.jpg)
 
 
 ### Historical Notes
@@ -26,7 +26,7 @@ Gravitational waves (GWs) are ripples in spacetime produced by accelerating mass
 
 ### How LIGO Detects Gravitational Waves
 
-![Diagram of the LIGO interferometer](assets/images/ligo_interferometer.jpg)
+![Diagram of the LIGO interferometer](assets/images/ligo_inferometer.jpg)
 
 The Laser Interferometer Gravitational-Wave Observatory (LIGO) detects
 gravitational waves using a Michelson interferometer with two
