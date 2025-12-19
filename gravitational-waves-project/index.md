@@ -9,13 +9,6 @@ title: Gravitational Waves Project
   <p class="meta">Emil Ma · Mentor: Norm Prokup</p>
 </div>
 
-
-# Gravitational Waves: Physics and Observation
-
-Emil Ma, Mentor: Norm Prokup. 
-
-December, 2025. 
-
 ## What Are Gravitational Waves?
 
 Gravitational waves (GWs) are ripples in spacetime produced by accelerating masses, analogous to how accelerating electric charges produce electromagnetic waves. They were first predicted by **Albert Einstein** in 1916 as part of General Relativity.
@@ -177,33 +170,76 @@ With FFts and ASDs, we can only see frequency information for fixed time interva
 
 ## 6. Analytic Model vs. Data
 
-An analytic model predicts how the gravitational-wave frequency should change over time for a merging binary system.
+An analytic model predicts how the gravitational-wave frequency should change over time for a merging binary system. This is based on general relativity and the concept of chirp mass, which determines the rate at which the frequency increases as the black holes spiral together.
 
 ![Analytic Model Frequency](assets/plots/simple_analytic_model.png)  
 ![Q-Transform Scatter Projection](assets/plots/qtransform_scatter.png)
 
-**Explanation:**  
+**How I made the plots:**  
+- I used a simple frequency model, gwfreq(), to compute how the gravitational-wave frequency evolves over time for a binary system with a given chirp mass (iM = 25 solar masses).
+- I took time samples from 0 to 4 seconds around the merger.
+- I plotted the resulting frequency vs. time curve was plotted using matplotlib.
+- Using lmfit, I fit the analytic model to the projected Q-transform data.
 
-The model predicts an increasing frequency as the two black holes approach each other. This trend matches the frequency track extracted from the data using the Q-transform.
+**What the plots show:**
+- The analytical model shows a smooth, continuous curve of increasing frequency over time.
+- The fitted curve shows that the analytic model accurately captures the chirp behavior seen in the data.
+
+**Interpretation:**
+- The increasing frequency over time is exactly what is expected from two massive objects spiraling together: the “chirp.”
+- By fitting an analytic model to the Q-transform data, we can quantitatively confirm that the observed gravitational-wave signal matches the theoretical prediction from general relativity.
+- This step links the raw strain data to the underlying physics, showing that the detected signal behaves exactly as predicted for a binary black hole merger.
 
 ---
 
 ## 7. Fitting an Oscillation Function
 
-We fit an analytic waveform directly to the processed strain data.
+In this step, we fit an analytic waveform directly to the processed strain data in the time domain. Unlike earlier sections that focused on frequency evolution, this approach models the actual oscillations of the gravitational-wave signal near the merger.
 
 ![Function Not Fitted](assets/plots/osc_not_fitted.png)  
 ![Function Fitted](assets/plots/osc_fitted.png)
 
-**Explanation:**  
+**How I made the plots:**  
+1. Analytic waveform definition
+- I defined an analytic function osc(t, …) to model the gravitational-wave strain.
+- The function includes:
+    - An increasing frequency from the earlier analytic chirp model "gwfreq()"
+    - A cosine oscillation to represent the wave nature of the signal
+    - An amplitude that grows as the merger approaches
+    - A decaying exponential after the merger to mimic the ringdown ("settling down" after the merger)
+    - This captures the key physical stages of a binary black hole merger: inspiral, merger, and ringdown.
 
-The fitted curve closely follows the oscillations and amplitude increase seen in the data near the merger. This indicates that the model captures the key features of the signal.
+2. Unfitted model plot
+- I first plotted the analytic function using reasonable parameters from theoretical models, without fitting to data.
+- This shows what a typical gravitational-wave–like signal looks like, but it is not yet matched to the observed strain.
+
+3. Fitting to data
+- I selected a short time window around the merger (≈ 0.3 seconds) from the whitened and bandpassed strain data.
+- I used the lmfit library to adjust the model parameters (chirp mass, merger time, amplitude, phase, etc.) to minimize the difference between the model and the data.
+- I plotted the best-fit analytic waveform on top of the data for direct comparison.
+
+**What the plots show:**
+- The fitted curve closely follows the oscillations and amplitude increase seen in the data near the merger. This indicates that the model captures the key features of the signal.
+
+**Interpretation:**
+- This step demonstrates that:
+    - The oscillatory structure of the data matches that of a gravitational wave
+    - The signal’s time-domain behavior can be explained using a physically motivated model
+- Together with the frequency-based analyses (Q-transform and analytic chirp model), this provides strong evidence that the observed signal is a binary black hole merger, as predicted by general relativity.
 
 ---
 
 ## 8. Conclusion
 
-Starting from noisy interferometer data, this analysis reproduces the key steps used by LIGO to identify GW150914. Through filtering, time-frequency analysis, and modeling, a clear gravitational-wave signal from a binary black hole merger emerges.
+Starting from noisy interferometer data, this analysis mimics the key steps used by LIGO to identify GW150914. Through filtering, time-frequency analysis, and modeling, a clear gravitational-wave signal from a binary black hole merger emerges.
+
+This project follows the same overall ideas used by the LIGO team, but in a simplified way. The real LIGO analysis used extremely detailed computer-generated waveforms from general relativity and compared the data against thousands of templates, while I used simpler analytic models to demonstrate the key features of the signal.
+
+LIGO also required the signal to be seen independently at multiple detectors to rule out local noise, whereas this project analyzes one detector at a time. In addition, the LIGO team performed extensive calibration, noise removal, and statistical tests to prove the signal was real, while this analysis focuses on understanding the physics and visually identifying the gravitational-wave chirp.
+
+Not to mention, I knew the answer to the problem already, whereas the LIGO team was looking through many many candidate events. 
+
+Even with these simplifications, the main structure of the GW150914 signal clearly emerges and matches theoretical expectations.
 
 Big thanks again to Norm for guiding through this independent study!
 
