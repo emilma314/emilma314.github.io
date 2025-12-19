@@ -12,7 +12,9 @@ title: Gravitational Waves Project
 
 # Gravitational Waves: Physics and Observation
 
-Emil Ma, Mentor: Norm Prokup.
+Emil Ma, Mentor: Norm Prokup. 
+
+December, 2025. 
 
 ## What Are Gravitational Waves?
 
@@ -21,14 +23,14 @@ Gravitational waves (GWs) are ripples in spacetime produced by accelerating mass
 
 
 ### Historical Notes
-- First indirect evidence: Hulse and Taylor binary pulsar (1974)
-- First direct detection: **GW150914** by LIGO (2015). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation for energy.  
+- First indirect evidence: [Hulse and Taylor binary pulsar (1974)](https://articles.adsabs.harvard.edu/pdf/1975ApJ...195L..51H)
+- First direct detection: [**GW150914** by LIGO (2015)](https://www.ligo.caltech.edu/page/press-release-gw150914). In the GW150914 event, two black holes with masses of approximately 36 and 29 solar masses spiraled toward each other and merged to form a single black hole of about 62 solar masses. The remaining mass, roughly 3 solar masses, was converted directly into energy and emitted as gravitational waves, according to Einstein’s relation for energy.  
 
 ### How LIGO Detects Gravitational Waves
 
 ![Diagram of the LIGO interferometer](assets/images/ligo_inferometer.jpg)
 
-The Laser Interferometer Gravitational-Wave Observatory (LIGO) detects
+The [Laser Interferometer Gravitational-Wave Observatory (LIGO)](https://www.ligo.caltech.edu/page/ligos-ifo) detects
 gravitational waves using a Michelson interferometer with two
 perpendicular arms, each 4 km long.
 
@@ -51,9 +53,9 @@ typically on the order of 10^-21.
 
 # Project: Analyzing GW150914 Data
 
-In the following sections, I analyze publicly available LIGO strain data
+In the following sections, I analyze publicly available [LIGO strain data](https://gwosc.org/)
 from the first detected gravitational-wave event, GW150914, and recreate
-the key steps used to identify the signal from detector noise.
+the key steps used to identify the signal from detector noise. The order of analysis follows the final project of MITxT 8.S50.1x "Computational Data Science in Physics I," and plots were independently implemented.
 
 ---
 
@@ -63,11 +65,17 @@ This plot shows the LIGO strain h(t) over time in a 32-second window centered on
 
 ![Raw Strain](assets/plots/strain_time.png)  <!-- your saved figure -->
 
-**Explanation:**  
-- x-axis: time (s) around the merger  
-- y-axis: strain (dimensionless)  
+**How I made the plot was made:**  
+- Data consist of time-stamped measurements of the relative length changes in LIGO’s two perpendicular arms.
+- Using Python (NumPy and Matplotlib), I loaded the data were, extracted a 32-second window around the merger, and plotted the strain values versus time.
 
-The strain measures how much the length of LIGO’s arms changes relative to their original length. In the raw data, the signal is buried in noise from the environment and the detector itself. Though there are several spikes, the gravitational wave cannot be clearly seen at this stage.
+**What the plot shows:**
+- x-axis: time (s) around the merger  
+- y-axis: strain (dimensionless), quantifying the fractional change in arm length
+
+**Interpretation:**
+- At this stage, the gravitation-wave signal is buried in mainly seismic noise.
+- Subsequent steps to clean up the data will reveal the true gravitational-wave signal hidden in these noisy measurements.
 
 ---
 
@@ -78,50 +86,92 @@ The amplitude spectral density shows how much noise the detector has at each fre
 ![ASD Full Range](assets/plots/asd_full.png)  
 ![ASD Zoomed](assets/plots/asd_zoom.png)
 
-**Explanation:**  
+**How I made the plot:**  
+- I transformed the raw strain data from the time domain to the frequency domain using a [Fast Fourier Tranform (FFT)](https://www.sciencedirect.com/topics/engineering/fast-fourier-transform). 
+- Using NumPy, SciPy, and Matplotlib, I compute the ASD as the square root of the power spectral density (PSD), giving a measure of the strain amplitude per unit frequency.
 
-Different frequencies are affected by different noise sources. Low frequencies are dominated by seismic motion, while very high frequencies are limited by the laser light itself. LIGO is most sensitive between about 100 and 300 Hz, which is also where binary black hole mergers emit most strongly.
+**What the plot shows:**
+- The x-axis represents frequency (Hz).
+- The y-axis represents the amplitude of the strain noise (strain/√Hz).
+- Peaks in the ASD indicate frequencies where noise is stronger, such as mechanical vibrations, electronic noise, or laser fluctuations.
+- The zoomed-in plot highlights the frequency band where LIGO is most sensitive and where the gravitational-wave signal is expected.
+
+**Interpretation:**
+- Low frequencies (<30 Hz) are dominated by seismic motion, while high frequencies (>500 Hz) are limited by photon shot noise in the laser.
+- LIGO’s optimal sensitivity is in the 100–300 Hz range, which coincides with the strongest emission frequencies for binary black hole mergers like GW150914.
+- Understanding the ASD is crucial because it tells us which frequencies are reliable for detecting astrophysical signals and which regions are dominated by noise.
+- This information guides later steps such as whitening and bandpass filtering, which enhance the visibility of the gravitational-wave signal.
 
 ---
 
 ## 3. Whitening the Data
 
-Whitening adjusts the data so that noise has roughly the same strength at all frequencies.
+Whitening adjusts the data so that noise has roughly the same strength across all frequencies, making it easier to see short-lived signals like gravitational-wave chirps.
 
 ![Roughly Whitened](assets/plots/rough_white.png)  
 ![GWpy Whitened](assets/plots/GWpy_white.png)
 
-**Explanation:**  
+**How I made the plot:**  
+- I transformed the raw strain data from time to frequency using a Fourier transform.
+- The amplitude of the noise at each frequency (the ASD) was calculated.
+- I divide the data in the frequency domain by the ASD to flatten the noise.
+- Then I transform the data back to the time domain, producing the “whitened” signal.
+- The Python GWpy library helps with windowing, overlapping segments, and correct scaling.
 
-After whitening, the background noise looks more uniform, and short-lived signals stand out more clearly in time. The GWpy method produces a cleaner result than a simple manual approach.
+**What the plot shows:**
+- x-axis: time (seconds) around the GW150914 merger event
+- y-axis: whitened strain (dimensionless, now scaled so that noise is roughly uniform across frequencies)
+- The noise floor appears more flat and uniform, without dominating low- or high-frequency peaks
 
----
-
-## 4. Q-Transform
-
-The Q-transform displays how the signal’s energy changes with both time and frequency.
-
-![Q-Transform](assets/plots/qtransform.png)
-
-**Explanation:**  
-- x-axis: time (s)  
-- y-axis: frequency (Hz)  
-- Color: normalized energy  
-
-A clear “chirp” pattern appears, where the frequency increases rapidly over time. This behavior is exactly what is expected when two massive objects spiral together and merge.
+**Interpretation:**
+- Whitening makes the gravitational-wave signal easier to detect because it removes frequency-dependent variations in the noise.
+- Before whitening, low-frequency seismic noise and high-frequency shot noise dominate different parts of the spectrum, masking the signal.
+- After whitening, the chirp from GW150914 stands out as a clear oscillation.
 
 ---
 
-## 5. Bandpass Filtering
+## 4. Bandpass Filtering
 
-A bandpass filter keeps only a selected range of frequencies and removes the rest.
+A bandpass filter allows only a specific range of frequencies to pass through while removing frequencies outside that range. This helps isolate the gravitational-wave signal from the detector noise.
 
 ![Bandpass 32s Window](assets/plots/bandpass_32s.png)  
 ![Bandpass Zoom 0.3s](assets/plots/bandpass_zoom.png)
 
-**Explanation:**  
+**How I made the plot:**
+- After whitening the strain data, I applied a bandpass filter to keep a certain range of frequencies.
+- I chose to keep frequencies between 30 and 400 Hz because this is the range where the gravitational-wave signal from a stellar-mass binary black hole merger, like GW150914, is strongest and also where LIGO is most sensitive. Low frequencies (<30 Hz) are dominated by seismic noise, while high frequencies (>400 Hz) are limited by laser shot noise.
+- In Python, this is done with GWpy’s bandpass method.
 
-By keeping frequencies between about 30 and 400 Hz, most of the noise is removed while the gravitational-wave signal remains. The zoomed-in plot clearly shows the short burst of the merger.
+**What the plot shows:**
+- x-axis: time (seconds) around GW150914
+- y-axis: strain (dimensionless, after whitening and filtering)
+- The noise outside 30–400 Hz is removed, so the background looks much quieter.
+
+**Interpretation:**  
+- By keeping frequencies between about 30 and 400 Hz, most of the noise is removed while the gravitational-wave signal remains.
+- The zoomed-in view shows just how brief and localized the merger signal is, highlighting the importance of filtering before further analysis.
+
+---
+
+## 5. Q-Transform
+
+With FFts and ASDs, we can only see frequency information for fixed time intervals. To see how the signal's energy changes with both frequency and time, we use a Q-transform.
+
+![Q-Transform](assets/plots/qtransform.png)
+
+**How I made the plot:**
+- Using the whitened strain data as input, I perform a Q-transform.
+- A [Q-transform](https://medium.com/@shwongheiley/gw3-q-transform-a-time-frequency-analysis-for-gravitational-waves-d168ba21bb61) is similar to a short-time Fourier transform, but it uses windowed sinusoids with varying durations (Q-factor) to balance time and frequency resolution.
+- Essentially, the Q-transform shows where and when the signal is strongest by highlighting bursts of energy at different frequencies over time, making it easier to spot gravitational waves.
+
+**What the plot shows:**
+- x-axis: time around the GW150914 merger (seconds)
+- y-axis: frequency (Hz)
+- Color: normalized energy at each time-frequency point
+
+**Interpretation:**
+- A clear “chirp” pattern appears: the frequency increases rapidly over a fraction of a second as the black holes spiral together. This matches very well with [black hole merger behavior](https://pmc.ncbi.nlm.nih.gov/articles/PMC5255899/) predicted by general relativity
+- Compared to the raw or whitened time series, the Q-transform makes it much easier to identify the gravitational-wave event visually.
 
 ---
 
