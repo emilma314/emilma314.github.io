@@ -65,5 +65,17 @@
     {{ content }}
   </main>
 
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll("a[href^='http']");
+      links.forEach(link => {
+        // Skip same-site links
+        if (link.hostname !== window.location.hostname) {
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener noreferrer");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
