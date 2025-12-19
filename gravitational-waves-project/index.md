@@ -59,9 +59,9 @@ This plot shows the LIGO strain h(t) over time in a 32-second window centered on
 
 ![Raw Strain](assets/plots/strain_time.png)  <!-- your saved figure -->
 
-**How I made the plot was made:**  
+**How I made the plot:**  
 - Data consist of time-stamped measurements of the relative length changes in LIGO’s two perpendicular arms.
-- Using Python (NumPy and Matplotlib), I loaded the data were, extracted a 32-second window around the merger, and plotted the strain values versus time.
+- Using Python (NumPy and Matplotlib), I loaded the data, extracted a 32-second window around the merger, and plotted the strain values versus time.
 
 **What the plot shows:**
 - x-axis: time (s) around the merger  
@@ -78,6 +78,9 @@ This plot shows the LIGO strain h(t) over time in a 32-second window centered on
 The amplitude spectral density shows how much noise the detector has at each frequency.
 
 ![ASD Full Range](assets/plots/asd_full.png)  
+
+Here is a zoomed-in plot around 1000Hz.
+
 ![ASD Zoomed](assets/plots/asd_zoom.png)
 
 **How I made the plot:**  
@@ -129,6 +132,9 @@ Whitening adjusts the data so that noise has roughly the same strength across al
 A bandpass filter allows only a specific range of frequencies to pass through while removing frequencies outside that range. This helps isolate the gravitational-wave signal from the detector noise.
 
 ![Bandpass 32s Window](assets/plots/bandpass_32s.png)  
+
+Here is a zoomed-in plot of 0.3s around the gravitational wave. 
+
 ![Bandpass Zoom 0.3s](assets/plots/bandpass_zoom.png)
 
 **How I made the plot:**
