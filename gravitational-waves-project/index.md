@@ -7,6 +7,7 @@ title: Gravitational Waves Project
   <h1>Gravitational Waves</h1>
   <p class="subtitle">Physics, Detection, and Analysis of GW150914</p>
   <p class="meta">Emil Ma · Mentor: Norm Prokup</p>
+  <p class="meta">December, 2025</p>
 </div>
 
 ## What Are Gravitational Waves?
