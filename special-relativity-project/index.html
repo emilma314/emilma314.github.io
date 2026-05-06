@@ -226,6 +226,15 @@
           pointHoverRadius: 8,
           showLine: false,
         },
+        {
+        label: 'classical result',
+        data: [],
+        backgroundColor: '#4fc3f7',
+        borderColor: '#4fc3f7',
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        showLine: false,
+        },
       ]
     },
     options: {
@@ -311,6 +320,7 @@
     chart.data.datasets[0].data = vs.map(vi => ({ x: vi, y: relAdd(u, vi) }));
     chart.data.datasets[1].data = vs.map(vi => ({ x: vi, y: u + vi }));
     chart.data.datasets[3].data = [{ x: v, y: rel }];
+    chart.data.datasets[4].data = [{ x: v, y: classical }];
     chart.update('none');
   }
 
