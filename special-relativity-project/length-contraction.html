@@ -42,12 +42,8 @@
     height: 260px;
   }
   .image-wrapper {
-    overflow: hidden;
     height: 240px;
     width: 200px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    transition: width 0.04s;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,9 +51,10 @@
   .image-wrapper img {
     height: 240px;
     width: 200px;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     transform-origin: center center;
+    transition: transform 0.04s;
   }
 
   .rest-outline {
@@ -181,8 +178,9 @@
     const wrapper = document.getElementById('img-wrapper');
     const img = document.getElementById('person-img');
 
-    wrapper.style.width = contracted + 'px';
-    img.style.width = contracted + 'px';
+    const scale = contracted / REST_WIDTH;
+    img.style.transform = `scaleX(${scale})`;
+    wrapper.style.width = REST_WIDTH + 'px';
 
     document.getElementById('gamma-out').textContent = g.toFixed(3);
     document.getElementById('length-out').textContent = (100 / g).toFixed(1) + '%';
