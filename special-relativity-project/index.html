@@ -8,7 +8,6 @@
 <style>
   :root {
     --bg: #0a0c10;
-    --surface: #11141a;
     --border: #1e2330;
     --text: #e8eaf0;
     --muted: #5a6278;
@@ -34,7 +33,6 @@
   h1 { font-family: 'Libre Baskerville', serif; font-size: 1.75rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 0.4rem; }
   .subtitle { font-size: 12px; color: var(--dim); line-height: 1.7; }
 
-  /* sliders */
   .sliders { margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
   .slider-row { display: grid; grid-template-columns: 80px 1fr 54px; align-items: center; gap: 1rem; }
   .slider-name { font-size: 12px; color: var(--dim); }
@@ -49,36 +47,18 @@
   .slider-val.v { color: var(--accent); }
   .slider-val.u { color: var(--amber); }
 
-  /* result */
   .result-row { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
   .result-main { font-size: 2.5rem; font-weight: 500; color: var(--green); line-height: 1; }
-  .result-main.warn { color: var(--red); }
   .result-label { font-size: 11px; color: var(--muted); line-height: 1.6; }
-  .result-label .formula { color: var(--dim); font-size: 12px; margin-top: 2px; }
+  .formula { color: var(--dim); font-size: 12px; margin-top: 2px; }
   .classical { font-size: 13px; color: var(--muted); margin-left: auto; text-align: right; line-height: 1.6; }
   .classical .val { color: var(--dim); }
   .classical .val.over { color: var(--red); }
 
-  /* proximity bar */
-  .bar-section { margin-bottom: 2rem; }
-  .bar-label { font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.75rem; }
-  .bar-track { height: 6px; background: var(--border); border-radius: 3px; position: relative; margin-bottom: 6px; }
-  .bar-fill { height: 100%; border-radius: 3px; transition: width 0.04s, background 0.04s; }
-  .bar-ticks { display: flex; justify-content: space-between; }
-  .bar-tick { font-size: 10px; color: var(--muted); }
-  .bar-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: var(--dim); }
-
-  /* chart */
-  .chart-section { margin-bottom: 2rem; }
   .chart-label { font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
   canvas { display: block; width: 100%; }
 
-  .footnote { font-size: 11px; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1rem; }
-
-  @media (max-width: 500px) {
-    body { padding: 2rem 1rem; }
-    .result-row { flex-wrap: wrap; }
-  }
+  .footnote { font-size: 11px; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 2rem; }
 </style>
 </head>
 <body>
@@ -108,7 +88,7 @@
       <div class="result-main" id="rel-out">0.8824</div>
       <div class="result-label">
         relativistic result
-        <div class="formula" id="formula-line">(<span id="fu">0.600</span> + <span id="fv">0.600</span>) / (1 + <span id="fprod">0.3600</span>) = <span id="fres">0.8824</span></div>
+        <div class="formula">(<span id="fu">0.600</span> + <span id="fv">0.600</span>) / (1 + <span id="fprod">0.3600</span>) = <span id="fres">0.8824</span></div>
       </div>
     </div>
     <div class="classical">
@@ -117,42 +97,20 @@
     </div>
   </div>
 
-  <div class="bar-section">
-    <div class="bar-label">proximity to c</div>
-    <div class="bar-track">
-      <div class="bar-fill" id="bar-fill"></div>
-    </div>
-    <div class="bar-ticks">
-      <span class="bar-tick">0</span>
-      <span class="bar-tick">0.25</span>
-      <span class="bar-tick">0.50</span>
-      <span class="bar-tick">0.75</span>
-      <span class="bar-tick">1</span>
-    </div>
-    <div class="bar-meta">
-      <span>gap: <strong id="gap-out">0.1176</strong></span>
-      <span>γ = <strong id="gamma-out">2.09</strong> &nbsp;·&nbsp; clocks slow <strong id="td-out">2.09×</strong> &nbsp;·&nbsp; lengths shrink to <strong id="lc-out">47.9%</strong></span>
-    </div>
-  </div>
-
-  <div class="chart-section">
-    <div class="chart-label">γ vs speed — your result</div>
-    <canvas id="chart" height="220"></canvas>
-  </div>
+  <div class="chart-label">observed velocity u as <em>v</em> varies — u′ fixed at <span id="chart-u-label" style="color:var(--amber)">0.600</span></div>
+  <canvas id="chart" height="280"></canvas>
 
   <div class="footnote">
-    γ = 1/√(1−β²) governs all relativistic effects and diverges as β → 1. The amber dot is your relativistic result; the blue triangle is where classical addition lands. The curve makes the asymptote visceral: there is no getting to 1.
+    x-axis: frame speed v. y-axis: observed speed u in S. The amber curve is the relativistic result; the blue dashed line is classical addition u′ + v. The dot marks the current v. Dragging the u′ slider reshapes the curve — notice it can never reach 1 no matter how large both speeds get.
   </div>
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
-  function gamma(b) { b = Math.min(Math.abs(b), 0.99995); return 1/Math.sqrt(1 - b*b); }
-  function relAdd(u,v) { return (u+v)/(1+u*v); }
-  function barColor(f) { return f < 0.6 ? '#5dcaa5' : f < 0.85 ? '#ef9f27' : '#e24b4a'; }
+  function relAdd(u, v) { return (u + v) / (1 + u * v); }
 
   const N = 300;
-  const betas = Array.from({length:N}, (_,i) => (i+1)/(N+1) * 0.9998);
+  const vs = Array.from({length: N}, (_, i) => (i + 1) / (N + 1) * 0.9998);
 
   const ctx = document.getElementById('chart').getContext('2d');
   const chart = new Chart(ctx, {
@@ -160,47 +118,71 @@
     data: {
       datasets: [
         {
-          label: 'γ(β)',
-          data: betas.map(b => ({x:b, y:Math.min(gamma(b),10)})),
-          borderColor: '#5dcaa5', borderWidth: 1.5, pointRadius: 0, fill: false,
+          label: 'relativistic  (u′ + v) / (1 + u′v)',
+          data: [],
+          borderColor: '#ef9f27',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+          tension: 0.1,
         },
         {
-          label: 'relativistic result',
+          label: 'classical  u′ + v',
           data: [],
-          backgroundColor: '#ef9f27', borderColor: '#ef9f27',
-          pointRadius: 7, pointHoverRadius: 9, showLine: false,
+          borderColor: '#4fc3f7',
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
         },
         {
-          label: 'classical result',
+          label: 'speed of light',
+          data: vs.map(v => ({ x: v, y: 1 })),
+          borderColor: '#2d3448',
+          borderWidth: 1,
+          borderDash: [2, 4],
+          pointRadius: 0,
+          fill: false,
+        },
+        {
+          label: 'current v',
           data: [],
-          backgroundColor: '#4fc3f7', borderColor: '#4fc3f7',
-          pointRadius: 6, pointStyle: 'triangle', showLine: false,
+          backgroundColor: '#e8eaf0',
+          borderColor: '#e8eaf0',
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          showLine: false,
         },
       ]
     },
     options: {
-      responsive: true, animation: {duration:0},
+      responsive: true,
+      animation: { duration: 0 },
       scales: {
         x: {
-          type:'linear', min:0, max:1,
-          title: {display:true, text:'β', color:'#5a6278', font:{family:'JetBrains Mono',size:11}},
-          ticks: {color:'#5a6278', font:{family:'JetBrains Mono',size:10}, stepSize:0.1},
-          grid: {color:'#1e2330'},
+          type: 'linear', min: 0, max: 1,
+          title: { display: true, text: 'v  (frame speed)', color: '#5a6278', font: { family: 'JetBrains Mono', size: 11 } },
+          ticks: { color: '#5a6278', font: { family: 'JetBrains Mono', size: 10 }, stepSize: 0.1 },
+          grid: { color: '#1e2330' },
         },
         y: {
-          min:0, max:10,
-          title: {display:true, text:'γ', color:'#5a6278', font:{family:'JetBrains Mono',size:11}},
-          ticks: {color:'#5a6278', font:{family:'JetBrains Mono',size:10}},
-          grid: {color:'#1e2330'},
+          min: 0, max: 1,
+          title: { display: true, text: 'u  (observed speed)', color: '#5a6278', font: { family: 'JetBrains Mono', size: 11 } },
+          ticks: { color: '#5a6278', font: { family: 'JetBrains Mono', size: 10 }, stepSize: 0.1 },
+          grid: { color: '#1e2330' },
         }
       },
       plugins: {
-        legend: {labels:{color:'#8892a8', font:{family:'JetBrains Mono',size:11}, boxWidth:14, padding:14}},
+        legend: {
+          labels: { color: '#8892a8', font: { family: 'JetBrains Mono', size: 11 }, boxWidth: 14, padding: 14 }
+        },
         tooltip: {
-          backgroundColor:'#11141a', borderColor:'#2d3448', borderWidth:1,
-          titleColor:'#8892a8', bodyColor:'#e8eaf0',
-          titleFont:{family:'JetBrains Mono',size:11}, bodyFont:{family:'JetBrains Mono',size:12},
-          callbacks: { label: c => ` γ = ${c.parsed.y.toFixed(3)}  at  β = ${c.parsed.x.toFixed(3)}` }
+          backgroundColor: '#11141a', borderColor: '#2d3448', borderWidth: 1,
+          titleColor: '#8892a8', bodyColor: '#e8eaf0',
+          titleFont: { family: 'JetBrains Mono', size: 11 },
+          bodyFont: { family: 'JetBrains Mono', size: 12 },
+          callbacks: { label: c => ` u = ${c.parsed.y.toFixed(4)}  at  v = ${c.parsed.x.toFixed(3)}` }
         }
       }
     }
@@ -212,34 +194,28 @@
 
     document.getElementById('v-out').textContent = v.toFixed(3);
     document.getElementById('u-out').textContent = u.toFixed(3);
+    document.getElementById('chart-u-label').textContent = u.toFixed(3);
 
     const rel = relAdd(u, v);
     const classical = u + v;
-    const g = gamma(rel);
-    const gap = 1 - rel;
 
     document.getElementById('rel-out').textContent = rel.toFixed(4);
-    document.getElementById('rel-out').className = 'result-main';
-
     document.getElementById('fu').textContent = u.toFixed(3);
     document.getElementById('fv').textContent = v.toFixed(3);
-    document.getElementById('fprod').textContent = (u*v).toFixed(4);
+    document.getElementById('fprod').textContent = (u * v).toFixed(4);
     document.getElementById('fres').textContent = rel.toFixed(4);
 
     const classEl = document.getElementById('classical-out');
     classEl.textContent = classical.toFixed(3);
     classEl.className = 'val' + (classical >= 1 ? ' over' : '');
 
-    document.getElementById('bar-fill').style.width = (rel * 100).toFixed(2) + '%';
-    document.getElementById('bar-fill').style.background = barColor(rel);
-    document.getElementById('gap-out').textContent = gap.toFixed(4);
-    document.getElementById('gamma-out').textContent = g.toFixed(2);
-    document.getElementById('td-out').textContent = g.toFixed(2) + '×';
-    document.getElementById('lc-out').textContent = (100/g).toFixed(1) + '%';
+    // rebuild curves based on current u′, sweeping all v
+    chart.data.datasets[0].data = vs.map(vi => ({ x: vi, y: relAdd(u, vi) }));
+    chart.data.datasets[1].data = vs.map(vi => ({ x: vi, y: Math.min(u + vi, 1.2) }));
 
-    chart.data.datasets[1].data = [{x: rel, y: Math.min(gamma(rel), 9.9)}];
-    const classAbs = Math.min(classical, 0.9998);
-    chart.data.datasets[2].data = [{x: classAbs, y: Math.min(gamma(classAbs), 9.9)}];
+    // dot at current v
+    chart.data.datasets[3].data = [{ x: v, y: rel }];
+
     chart.update('none');
   }
 
