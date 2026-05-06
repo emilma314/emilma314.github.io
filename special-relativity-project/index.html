@@ -55,6 +55,8 @@
   .classical .val { color: var(--dim); }
   .classical .val.over { color: var(--red); }
 
+  #diagram { display: block; width: 100%; margin-bottom: 2rem; }
+
   .chart-label { font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 1rem; }
   canvas { display: block; width: 100%; }
 
@@ -82,6 +84,77 @@
       <span class="slider-val u" id="u-out">0.600</span>
     </div>
   </div>
+
+  <!-- SVG diagram -->
+  <svg id="diagram" viewBox="0 0 640 160" xmlns="http://www.w3.org/2000/svg">
+    <!-- ground line -->
+    <line x1="20" y1="130" x2="620" y2="130" stroke="#1e2330" stroke-width="1.5"/>
+
+    <!-- escalator platform -->
+    <rect id="escalator" x="60" y="90" width="320" height="34" rx="4" fill="#11141a" stroke="#2d3448" stroke-width="1"/>
+
+    <!-- escalator steps (decorative) -->
+    <g id="steps" stroke="#2d3448" stroke-width="1">
+      <line x1="100" y1="90" x2="100" y2="124"/>
+      <line x1="140" y1="90" x2="140" y2="124"/>
+      <line x1="180" y1="90" x2="180" y2="124"/>
+      <line x1="220" y1="90" x2="220" y2="124"/>
+      <line x1="260" y1="90" x2="260" y2="124"/>
+      <line x1="300" y1="90" x2="300" y2="124"/>
+      <line x1="340" y1="90" x2="340" y2="124"/>
+    </g>
+
+    <!-- escalator label -->
+    <text x="68" y="112" fill="#5a6278" font-family="'JetBrains Mono', monospace" font-size="10">escalator  (frame S′)</text>
+
+    <!-- v arrow: from escalator, pointing right, scales with v -->
+    <g id="v-arrow-group">
+      <line id="v-arrow-line" x1="220" y1="75" x2="340" y2="75" stroke="#4fc3f7" stroke-width="2" marker-end="url(#arrowBlue)"/>
+      <text id="v-arrow-label" x="275" y="68" fill="#4fc3f7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">v</text>
+    </g>
+
+    <!-- stick figure on escalator -->
+    <!-- body at x=220 -->
+    <g id="figure">
+      <!-- head -->
+      <circle cx="220" cy="68" r="8" fill="none" stroke="#e8eaf0" stroke-width="1.5"/>
+      <!-- body -->
+      <line x1="220" y1="76" x2="220" y2="96" stroke="#e8eaf0" stroke-width="1.5"/>
+      <!-- arms -->
+      <line x1="205" y1="84" x2="235" y2="84" stroke="#e8eaf0" stroke-width="1.5"/>
+      <!-- legs -->
+      <line x1="220" y1="96" x2="210" y2="112" stroke="#e8eaf0" stroke-width="1.5"/>
+      <line x1="220" y1="96" x2="230" y2="112" stroke="#e8eaf0" stroke-width="1.5"/>
+    </g>
+
+    <!-- u′ arrow: from figure, pointing right, scales with u′ -->
+    <g id="u-arrow-group">
+      <line id="u-arrow-line" x1="228" y1="84" x2="348" y2="84" stroke="#ef9f27" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <text id="u-arrow-label" x="288" y="98" fill="#ef9f27" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">u′</text>
+    </g>
+
+    <!-- u result arrow along ground -->
+    <g id="u-result-group">
+      <line id="u-result-line" x1="60" y1="144" x2="300" y2="144" stroke="#5dcaa5" stroke-width="2" marker-end="url(#arrowGreen)"/>
+      <text id="u-result-label" x="180" y="158" fill="#5dcaa5" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">u</text>
+    </g>
+
+    <!-- S label -->
+    <text x="22" y="148" fill="#5a6278" font-family="'JetBrains Mono', monospace" font-size="10">S</text>
+
+    <!-- arrowhead markers -->
+    <defs>
+      <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#4fc3f7"/>
+      </marker>
+      <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#ef9f27"/>
+      </marker>
+      <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#5dcaa5"/>
+      </marker>
+    </defs>
+  </svg>
 
   <div class="result-row">
     <div>
@@ -134,7 +207,6 @@
           borderDash: [5, 4],
           pointRadius: 0,
           fill: false,
-          tension: 0,
         },
         {
           label: 'speed of light',
@@ -188,6 +260,31 @@
     }
   });
 
+  // SVG arrow scaling
+  // v arrow: starts at x=220, max length ~180px for v=1
+  const V_ARROW_START_X = 220;
+  const U_ARROW_START_X = 228;
+  const U_RESULT_START_X = 60;
+  const MAX_ARROW = 180;
+
+  function updateDiagram(v, u, rel) {
+    const vLen = Math.max(v * MAX_ARROW, 6);
+    const uLen = Math.max(u * MAX_ARROW, 6);
+    const relLen = Math.max(rel * MAX_ARROW, 6);
+
+    // v arrow (blue, above escalator)
+    document.getElementById('v-arrow-line').setAttribute('x2', V_ARROW_START_X + vLen);
+    document.getElementById('v-arrow-label').setAttribute('x', V_ARROW_START_X + vLen / 2);
+
+    // u′ arrow (amber, from figure arms)
+    document.getElementById('u-arrow-line').setAttribute('x2', U_ARROW_START_X + uLen);
+    document.getElementById('u-arrow-label').setAttribute('x', U_ARROW_START_X + uLen / 2);
+
+    // u result arrow (green, along ground)
+    document.getElementById('u-result-line').setAttribute('x2', U_RESULT_START_X + relLen);
+    document.getElementById('u-result-label').setAttribute('x', U_RESULT_START_X + relLen / 2);
+  }
+
   function update() {
     const v = parseFloat(document.getElementById('v').value) / 1000;
     const u = parseFloat(document.getElementById('u').value) / 1000;
@@ -209,13 +306,11 @@
     classEl.textContent = classical.toFixed(3);
     classEl.className = 'val' + (classical >= 1 ? ' over' : '');
 
-    // rebuild curves based on current u′, sweeping all v
+    updateDiagram(v, u, rel);
+
     chart.data.datasets[0].data = vs.map(vi => ({ x: vi, y: relAdd(u, vi) }));
-    chart.data.datasets[1].data = vs.map(vi => ({ x: vi, y: Math.min(u + vi, 1.2) }));
-
-    // dot at current v
+    chart.data.datasets[1].data = vs.map(vi => ({ x: vi, y: u + vi }));
     chart.data.datasets[3].data = [{ x: v, y: rel }];
-
     chart.update('none');
   }
 
