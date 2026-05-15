@@ -106,11 +106,11 @@ h1{
   position:absolute;
   left:50%;
   top:50%;
-  transform:translate(-50%,-50%);
   width:240px;
   height:320px;
   border:1px solid var(--dim);
   border-radius:6px;
+  transform:translate(-50%,-50%);
 }
 
 .mirror{
@@ -151,8 +151,8 @@ h1{
 
 .train-arrow{
   position:absolute;
-  bottom:20px;
-  left:30px;
+  top:50%;
+  transform:translateY(-50%);
   display:flex;
   flex-direction:column;
   gap:5px;
@@ -192,16 +192,9 @@ h1{
 }
 
 .clock-number{
-  font-size:2rem;
+  font-size:1.2rem;
   line-height:1;
   color:var(--green);
-}
-
-.clock-label{
-  font-size:10px;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:0.08em;
 }
 
 .controls{
@@ -265,7 +258,6 @@ button{
   border-radius:6px;
   cursor:pointer;
   font-family:'JetBrains Mono', monospace;
-  transition:0.15s;
 }
 
 button:hover{
@@ -315,151 +307,154 @@ button:hover{
 <div class="page">
 
 <header>
-  <div class="eyebrow">Special Relativity · Demo 03</div>
 
-  <h1>Light Clock & Time Dilation</h1>
+<div class="eyebrow">Special Relativity · Demo 03</div>
 
-  <p class="subtitle">
-    In the train frame, light moves vertically between mirrors.
-    In the ground frame, the train moves sideways, so the light follows
-    a longer diagonal path while still traveling at speed <em>c</em>.
-  </p>
+<h1>Light Clock & Time Dilation</h1>
+
+<p class="subtitle">
+In the train frame, light moves vertically between mirrors.
+In the ground frame, the moving train causes the light
+to follow a diagonal path.
+</p>
+
 </header>
 
 <div class="equation">
-  <span style="font-family:'Libre Baskerville', serif; font-size:1.4rem;">
-    Δt = γΔτ
-    &nbsp;&nbsp;=&nbsp;&nbsp;
-    Δτ / √(1 − v²/c²)
-  </span>
+
+<span style="font-family:'Libre Baskerville', serif; font-size:1.4rem;">
+Δt = γΔτ
+&nbsp;&nbsp;=&nbsp;&nbsp;
+Δτ / √(1 − v²/c²)
+</span>
+
 </div>
 
 <div class="panels">
 
-  <!-- TRAIN FRAME -->
+<!-- TRAIN FRAME -->
 
-  <div class="panel">
+<div class="panel">
 
-    <div class="panel-title">Train Frame</div>
+<div class="panel-title">Train Frame</div>
 
-    <div class="scene">
+<div class="scene">
 
-      <div class="clock">
-        <div class="clock-number">Proper Time</div>
-      </div>
+<div class="clock">
+<div class="clock-number">Proper Time</div>
+</div>
 
-      <div class="train">
+<div class="train">
 
-        <div class="mirror top"></div>
-        <div class="mirror bottom"></div>
+<div class="mirror top"></div>
+<div class="mirror bottom"></div>
 
-        <div class="light" id="train-light"></div>
+<div class="light" id="train-light"></div>
 
-      </div>
+</div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
-  <!-- GROUND FRAME -->
+<!-- GROUND FRAME -->
 
-  <div class="panel">
+<div class="panel">
 
-    <div class="panel-title">Ground Frame</div>
+<div class="panel-title">Ground Frame</div>
 
-    <div class="scene">
+<div class="scene" id="ground-scene">
 
-      <svg class="path-line" id="path-svg"></svg>
+<svg class="path-line" id="path-svg"></svg>
 
-      <div class="clock">
-        <div class="clock-number">Dilated Time</div>
-      </div>
+<div class="clock">
+<div class="clock-number">Dilated Time</div>
+</div>
 
-      <div class="train" id="ground-train">
+<div class="train" id="ground-train">
 
-        <div class="mirror top"></div>
-        <div class="mirror bottom"></div>
+<div class="mirror top"></div>
+<div class="mirror bottom"></div>
 
-        <div class="light" id="ground-light"></div>
+<div class="light" id="ground-light"></div>
 
-      </div>
+</div>
 
-      <div class="train-arrow">
-        <div class="arrow-label">v</div>
+<div class="train-arrow" id="train-arrow">
 
-        <div class="arrow-wrap">
-          <div class="arrow-shaft"></div>
-          <div class="arrow-head"></div>
-        </div>
-      </div>
+<div class="arrow-label">v</div>
 
-    </div>
+<div class="arrow-wrap">
+<div class="arrow-shaft" id="arrow-shaft"></div>
+<div class="arrow-head"></div>
+</div>
 
-  </div>
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <div class="controls">
 
-  <div class="slider-row">
+<div class="slider-row">
 
-    <span class="slider-name"><em>v</em> (speed)</span>
+<span class="slider-name"><em>v</em> (speed)</span>
 
-    <input
-      type="range"
-      id="speed-slider"
-      min="0"
-      max="950"
-      value="0"
-      step="1"
-    >
+<input
+type="range"
+id="speed-slider"
+min="0"
+max="950"
+value="0"
+step="1"
+>
 
-    <span class="slider-val" id="speed-out">0.000 c</span>
+<span class="slider-val" id="speed-out">0.000 c</span>
 
-  </div>
+</div>
 
-  <div class="button-row">
-    <button id="play-btn">Play</button>
-    <button id="reset-btn">Reset</button>
-  </div>
+<div class="button-row">
+
+<button id="play-btn">Play</button>
+<button id="reset-btn">Reset</button>
+
+</div>
 
 </div>
 
 <div class="readouts">
 
-  <div class="readout">
-    <div class="readout-val" id="gamma-out" style="color:var(--dim);">
-      1.000
-    </div>
-    <div class="readout-label">γ</div>
-  </div>
+<div class="readout">
+<div class="readout-val" id="gamma-out">1.000</div>
+<div class="readout-label">γ</div>
+</div>
 
-  <div class="readout">
-    <div class="readout-val" id="train-period" style="color:var(--green);">
-      1.000 s
-    </div>
-    <div class="readout-label">
-      train frame<br>
-      bounce period
-    </div>
-  </div>
+<div class="readout">
+<div class="readout-val" id="train-period">1.000 s</div>
+<div class="readout-label">
+train frame<br>
+bounce period
+</div>
+</div>
 
-  <div class="readout">
-    <div class="readout-val" id="ground-period" style="color:var(--accent);">
-      1.000 s
-    </div>
-    <div class="readout-label">
-      ground frame<br>
-      bounce period
-    </div>
-  </div>
+<div class="readout">
+<div class="readout-val" id="ground-period">1.000 s</div>
+<div class="readout-label">
+ground frame<br>
+bounce period
+</div>
+</div>
 
 </div>
 
 <div class="footnote">
-  Because light always moves at speed c, the diagonal path in the
-  ground frame takes longer than the vertical path in the train frame.
-  This causes moving clocks to run slower.
+The ground observer sees the mirrors moving sideways while
+the photon travels, so the light follows a diagonal path.
+Since light always travels at speed c, the longer path
+requires more time.
 </div>
 
 </div>
@@ -476,12 +471,19 @@ let startTime = null;
 
 const TRAIN_HEIGHT = 260;
 
-const trainLight = document.getElementById('train-light');
-const groundLight = document.getElementById('ground-light');
+const trainLight =
+  document.getElementById('train-light');
+
+const groundLight =
+  document.getElementById('ground-light');
+
+const groundTrain =
+  document.getElementById('ground-train');
 
 function computeGamma(b){
 
-  const clamped = Math.min(Math.abs(b),0.999999);
+  const clamped =
+    Math.min(Math.abs(b),0.999999);
 
   return 1 / Math.sqrt(1 - clamped * clamped);
 
@@ -490,8 +492,9 @@ function computeGamma(b){
 function updateSpeed(){
 
   beta =
-    parseFloat(document.getElementById('speed-slider').value)
-    / 1000;
+    parseFloat(
+      document.getElementById('speed-slider').value
+    ) / 1000;
 
   gamma = computeGamma(beta);
 
@@ -515,16 +518,17 @@ function triangleWave(x){
 
 }
 
-function drawPath(x, y){
+function drawPath(x1, y1, x2, y2){
 
-  const svg = document.getElementById('path-svg');
+  const svg =
+    document.getElementById('path-svg');
 
   svg.innerHTML = `
     <line
-      x1="120"
-      y1="30"
-      x2="${x}"
-      y2="${y}"
+      x1="${x1}"
+      y1="${y1}"
+      x2="${x2}"
+      y2="${y2}"
       stroke="#4fc3f7"
       stroke-width="2"
       opacity="0.6"
@@ -548,7 +552,8 @@ function animate(timestamp){
 
   }
 
-  const elapsed = (timestamp - startTime) / 1000;
+  const elapsed =
+    (timestamp - startTime) / 1000;
 
   const trainCycle =
     elapsed / TRAIN_PERIOD;
@@ -569,19 +574,58 @@ function animate(timestamp){
   const trainY =
     30 + trainPhase * TRAIN_HEIGHT;
 
-  trainLight.style.left = trainX + 'px';
-  trainLight.style.top = trainY + 'px';
+  trainLight.style.left =
+    trainX + 'px';
+
+  trainLight.style.top =
+    trainY + 'px';
 
   /* GROUND FRAME */
+
+  const sceneCenterX = 240;
+
+  /*
+  train moves right,
+  camera partially follows
+  */
+
+  const trainMotion =
+    beta * elapsed * 120;
+
+  const cameraOffset =
+    trainMotion * 0.85;
+
+  const visibleTrainX =
+    sceneCenterX +
+    trainMotion -
+    cameraOffset;
+
+  groundTrain.style.left =
+    visibleTrainX + 'px';
+
+  groundTrain.style.top =
+    '50%';
+
+  groundTrain.style.transform =
+    'translate(-50%, -50%)';
+
+  /*
+  light diagonal motion
+  */
 
   const horizontalAmplitude =
     beta * 140;
 
   const horizontalPhase =
-    Math.sin(elapsed * Math.PI / (TRAIN_PERIOD * gamma));
+    Math.sin(
+      elapsed *
+      Math.PI /
+      (TRAIN_PERIOD * gamma)
+    );
 
   const groundX =
-    120 + horizontalAmplitude * horizontalPhase;
+    visibleTrainX +
+    horizontalAmplitude * horizontalPhase;
 
   const groundY =
     30 + groundPhase * TRAIN_HEIGHT;
@@ -592,7 +636,33 @@ function animate(timestamp){
   groundLight.style.top =
     groundY + 'px';
 
-  drawPath(groundX, groundY);
+  /*
+  path visualization
+  */
+
+  drawPath(
+    visibleTrainX,
+    30,
+    groundX,
+    groundY
+  );
+
+  /*
+  arrow follows train
+  */
+
+  const arrow =
+    document.getElementById('train-arrow');
+
+  arrow.style.left =
+    (visibleTrainX + 150) + 'px';
+
+  /*
+  arrow length scales with speed
+  */
+
+  document.getElementById('arrow-shaft').style.width =
+    (40 + beta * 120) + 'px';
 
   requestAnimationFrame(animate);
 
