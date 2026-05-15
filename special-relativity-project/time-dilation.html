@@ -17,7 +17,6 @@
   --dim:#8892a8;
   --accent:#4fc3f7;
   --green:#5dcaa5;
-  --red:#e24b4a;
 }
 
 *{
@@ -56,7 +55,6 @@ h1{
   font-family:'Libre Baskerville', serif;
   font-size:1.75rem;
   font-weight:400;
-  letter-spacing:-0.01em;
   line-height:1.25;
   margin-bottom:0.4rem;
 }
@@ -146,6 +144,8 @@ h1{
 .path-line{
   position:absolute;
   inset:0;
+  width:100%;
+  height:100%;
   pointer-events:none;
 }
 
@@ -342,11 +342,10 @@ button:hover{
 
     <div class="panel-title">Train Frame</div>
 
-    <div class="scene" id="train-scene">
+    <div class="scene">
 
       <div class="clock">
-        <div class="clock-number" id="train-count">0</div>
-        <div class="clock-label">bounces</div>
+        <div class="clock-number">Proper Time</div>
       </div>
 
       <div class="train">
@@ -368,13 +367,12 @@ button:hover{
 
     <div class="panel-title">Ground Frame</div>
 
-    <div class="scene" id="ground-scene">
+    <div class="scene">
 
       <svg class="path-line" id="path-svg"></svg>
 
       <div class="clock">
-        <div class="clock-number" id="ground-count">0</div>
-        <div class="clock-label">bounces</div>
+        <div class="clock-number">Dilated Time</div>
       </div>
 
       <div class="train" id="ground-train">
@@ -459,10 +457,9 @@ button:hover{
 </div>
 
 <div class="footnote">
-  The left panel shows the light clock in its own rest frame.
-  The right panel shows the same clock from the ground.
-  Because the light must travel farther diagonally while still moving at speed c,
-  each tick takes longer in the ground frame: this is time dilation.
+  Because light always moves at speed c, the diagonal path in the
+  ground frame takes longer than the vertical path in the train frame.
+  This causes moving clocks to run slower.
 </div>
 
 </div>
@@ -478,19 +475,16 @@ let running = false;
 let startTime = null;
 
 const TRAIN_HEIGHT = 260;
-const TRAIN_WIDTH = 240;
-
-const TRAIN_TOP = 80;
-const TRAIN_LEFT = 180;
 
 const trainLight = document.getElementById('train-light');
 const groundLight = document.getElementById('ground-light');
 
-const groundTrain = document.getElementById('ground-train');
-
 function computeGamma(b){
+
   const clamped = Math.min(Math.abs(b),0.999999);
+
   return 1 / Math.sqrt(1 - clamped * clamped);
+
 }
 
 function updateSpeed(){
@@ -512,11 +506,30 @@ function updateSpeed(){
 
   document.getElementById('ground-period').textContent =
     (TRAIN_PERIOD * gamma).toFixed(3) + ' s';
+
 }
 
 function triangleWave(x){
 
   return 1 - Math.abs(1 - (x % 2));
+
+}
+
+function drawPath(x, y){
+
+  const svg = document.getElementById('path-svg');
+
+  svg.innerHTML = `
+    <line
+      x1="120"
+      y1="30"
+      x2="${x}"
+      y2="${y}"
+      stroke="#4fc3f7"
+      stroke-width="2"
+      opacity="0.6"
+    />
+  `;
 
 }
 
@@ -552,6 +565,7 @@ function animate(timestamp){
   /* TRAIN FRAME */
 
   const trainX = 120;
+
   const trainY =
     30 + trainPhase * TRAIN_HEIGHT;
 
@@ -560,41 +574,27 @@ function animate(timestamp){
 
   /* GROUND FRAME */
 
-    /* keep train fixed onscreen */
-    groundTrain.style.left = '50%';
-    groundTrain.style.transform = 'translate(-50%, -50%)';
-
-    /*
-    Light still moves diagonally because
-    horizontal displacement depends on velocity.
-    */
-
-    const horizontalAmplitude =
+  const horizontalAmplitude =
     beta * 140;
 
-    /*
-    triangle wave:
-    -1 → +1 → -1
-    */
-    const horizontalPhase =
+  const horizontalPhase =
     Math.sin(elapsed * Math.PI / (TRAIN_PERIOD * gamma));
 
-    const groundX =
+  const groundX =
     120 + horizontalAmplitude * horizontalPhase;
 
-    const groundY =
+  const groundY =
     30 + groundPhase * TRAIN_HEIGHT;
 
-    groundLight.style.left =
+  groundLight.style.left =
     groundX + 'px';
 
-    groundLight.style.top =
+  groundLight.style.top =
     groundY + 'px';
 
-    drawPath(
-    groundX,
-    groundY
-    );
+  drawPath(groundX, groundY);
+
+  requestAnimationFrame(animate);
 
 }
 
@@ -620,9 +620,6 @@ document.getElementById('reset-btn')
 
   document.getElementById('play-btn').textContent =
     'Play';
-
-  document.getElementById('train-count').textContent = '0';
-  document.getElementById('ground-count').textContent = '0';
 
 });
 
