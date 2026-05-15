@@ -122,7 +122,7 @@
     display: block;
 
     /* KEY CHANGE */
-    transform-origin: left center;
+    transform-origin: center center;
   }
 
   .velocity-arrow {
@@ -388,6 +388,8 @@
     const scale = 1 / g;
 
     const contractedWidth = FULL_WIDTH * scale;
+
+    const rightEdge = (FULL_WIDTH / 2) + (contractedWidth / 2);
 
     document.getElementById('v-out').textContent =
       beta.toFixed(3);
