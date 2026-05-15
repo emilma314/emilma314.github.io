@@ -16,7 +16,13 @@
     --green: #5dcaa5;
     --red: #e24b4a;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     background: var(--bg);
     color: var(--text);
@@ -25,14 +31,46 @@
     padding: 3rem 2rem;
     min-height: 100vh;
   }
-  .page { max-width: 700px; margin: 0 auto; }
 
-  header { margin-bottom: 2.5rem; }
-  .eyebrow { font-size: 10px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.6rem; }
-  h1 { font-family: 'Libre Baskerville', serif; font-size: 1.75rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 0.4rem; }
-  .subtitle { font-size: 12px; color: var(--dim); line-height: 1.7; }
+  .page {
+    max-width: 700px;
+    margin: 0 auto;
+  }
 
-  .equation { margin-bottom: 2rem; padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 6px; text-align: center; }
+  header {
+    margin-bottom: 2.5rem;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .equation {
+    margin-bottom: 2rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-align: center;
+  }
 
   .image-container {
     display: flex;
@@ -41,51 +79,69 @@
     margin-bottom: 2rem;
     height: 340px;
   }
+
   .image-scene {
     position: relative;
     display: flex;
     align-items: center;
   }
+
   .image-container-inner {
     position: relative;
     width: 260px;
     height: 320px;
     flex-shrink: 0;
   }
+
   .rest-outline {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     border: 1px dashed var(--muted);
     border-radius: 4px;
     height: 320px;
     width: 260px;
     pointer-events: none;
   }
+
   .image-wrapper {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     height: 320px;
     width: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
   .image-wrapper img {
     height: 320px;
     width: 260px;
     object-fit: contain;
     display: block;
-    transform-origin: center center;
+
+    /* KEY CHANGE */
+    transform-origin: left center;
   }
 
   .velocity-arrow {
+    position: absolute;
+
+    /* starts at right edge of full image */
+    left: 270px;
+
+    top: 50%;
+    transform: translateY(-50%);
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 10px;
     gap: 4px;
-    min-width: 20px;
+
+    transition: left 0.08s linear;
   }
+
   .arrow-label {
     font-family: 'Libre Baskerville', serif;
     font-style: italic;
@@ -94,6 +150,7 @@
     line-height: 1;
     white-space: nowrap;
   }
+
   .arrow-speed {
     font-size: 11px;
     color: var(--accent);
@@ -101,17 +158,20 @@
     white-space: nowrap;
     line-height: 1;
   }
+
   .arrow-shaft-wrap {
     display: flex;
     align-items: center;
     width: 100%;
   }
+
   .arrow-shaft {
     height: 2px;
     background: var(--accent);
     flex: 1;
     min-width: 2px;
   }
+
   .arrow-head {
     width: 0;
     height: 0;
@@ -121,93 +181,196 @@
     flex-shrink: 0;
   }
 
-  .slider-section { margin-bottom: 2rem; }
-  .slider-row { display: grid; grid-template-columns: 80px 1fr 64px; align-items: center; gap: 1rem; }
-  .slider-name { font-size: 12px; color: var(--dim); }
-  .slider-name em { font-family: 'Libre Baskerville', serif; font-style: italic; }
+  .slider-section {
+    margin-bottom: 2rem;
+  }
+
+  .slider-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 64px;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .slider-name {
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .slider-name em {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+  }
+
   input[type=range] {
-    -webkit-appearance: none; appearance: none;
-    width: 100%; height: 2px; background: var(--border); border-radius: 2px; outline: none; cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
   }
+
   input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%;
-    background: var(--accent); border: none; cursor: pointer;
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
   }
-  .slider-val { font-size: 13px; text-align: right; color: var(--accent); }
 
-  .readouts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
-  .readout { text-align: center; }
-  .readout-val { font-size: 2.2rem; font-weight: 500; line-height: 1; margin-bottom: 6px; }
-  .readout-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
+  .slider-val {
+    font-size: 13px;
+    text-align: right;
+    color: var(--accent);
+  }
 
-  .footnote { font-size: 11px; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
+  .readouts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .readout {
+    text-align: center;
+  }
+
+  .readout-val {
+    font-size: 2.2rem;
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .readout-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .footnote {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
 </style>
 </head>
+
 <body>
 <div class="page">
 
   <header>
     <div class="eyebrow">Special Relativity · Demo 02</div>
     <h1>Length Contraction</h1>
-    <p class="subtitle">An object moving at speed <em>v</em> appears contracted along its direction of motion by a factor of γ.</p>
+    <p class="subtitle">
+      An object moving at speed <em>v</em> appears contracted along its direction of motion by a factor of γ.
+    </p>
   </header>
 
   <div class="equation">
     <span style="font-family: 'Libre Baskerville', serif; font-size: 1.4rem; color: var(--text);">
-      L = L₀ / γ &nbsp;=&nbsp; L₀ √(1 − <span style="color: var(--accent);">v</span>²/c²)
+      L = L₀ / γ &nbsp;=&nbsp; L₀ √(1 −
+      <span style="color: var(--accent);">v</span>²/c²)
     </span>
   </div>
 
   <div class="image-container">
     <div class="image-scene">
+
       <div class="image-container-inner">
         <div class="rest-outline"></div>
+
         <div class="image-wrapper" id="img-wrapper">
-          <img id="person-img" src="einstein.jpg" alt="person" draggable="false">
+          <img
+            id="person-img"
+            src="einstein.jpg"
+            alt="person"
+            draggable="false"
+          >
         </div>
       </div>
+
       <div class="velocity-arrow" id="velocity-arrow">
         <span class="arrow-label">v</span>
         <span class="arrow-speed" id="arrow-speed-label">0.000 c</span>
+
         <div class="arrow-shaft-wrap">
           <div class="arrow-shaft" id="arrow-shaft"></div>
           <div class="arrow-head"></div>
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="slider-section">
     <div class="slider-row">
       <span class="slider-name"><em>v</em> &nbsp;(speed)</span>
-      <input type="range" id="v" min="0" max="999" value="0" step="1">
+
+      <input
+        type="range"
+        id="v"
+        min="0"
+        max="999"
+        value="0"
+        step="1"
+      >
+
       <span class="slider-val" id="v-out">0.000</span>
     </div>
   </div>
 
   <div class="readouts">
     <div class="readout">
-      <div class="readout-val" style="color: var(--dim);" id="gamma-out">1.000</div>
+      <div class="readout-val" style="color: var(--dim);" id="gamma-out">
+        1.000
+      </div>
       <div class="readout-label">γ</div>
     </div>
+
     <div class="readout">
-      <div class="readout-val" style="color: var(--green);" id="length-out">100%</div>
-      <div class="readout-label">length<br>after contraction</div>
+      <div class="readout-val" style="color: var(--green);" id="length-out">
+        100%
+      </div>
+      <div class="readout-label">
+        length<br>after contraction
+      </div>
     </div>
+
     <div class="readout">
-      <div class="readout-val" style="color: var(--accent);" id="speed-out">0.000 c</div>
+      <div class="readout-val" style="color: var(--accent);" id="speed-out">
+        0.000 c
+      </div>
       <div class="readout-label">speed</div>
     </div>
   </div>
 
   <div class="footnote">
-    The dashed outline shows the rest length L₀. Only the horizontal dimension contracts — the direction of motion. At everyday speeds γ ≈ 1 and the effect is negligible; near c, γ → ∞ and the object is squashed to zero width.
+    The dashed outline shows the rest length L₀. Only the horizontal
+    dimension contracts — the direction of motion. At everyday speeds
+    γ ≈ 1 and the effect is negligible; near c, γ → ∞ and the object
+    is squashed to zero width.
   </div>
 
 </div>
+
 <script>
   const ARROW_MIN = 6;
   const ARROW_MAX = 120;
+
+  const FULL_WIDTH = 260;
 
   function gamma(beta) {
     const b = Math.min(Math.abs(beta), 0.99999);
@@ -215,24 +378,49 @@
   }
 
   function update() {
+
     const raw = parseFloat(document.getElementById('v').value);
+
     const beta = raw / 1000;
+
     const g = gamma(beta);
+
     const scale = 1 / g;
 
-    document.getElementById('v-out').textContent = beta.toFixed(3);
-    document.getElementById('person-img').style.transform = `scaleX(${scale})`;
-    document.getElementById('gamma-out').textContent = g.toFixed(3);
-    document.getElementById('length-out').textContent = (100 / g).toFixed(1) + '%';
-    document.getElementById('speed-out').textContent = beta.toFixed(3) + ' c';
+    const contractedWidth = FULL_WIDTH * scale;
 
-    document.getElementById('arrow-speed-label').textContent = beta.toFixed(3) + ' c';
+    document.getElementById('v-out').textContent =
+      beta.toFixed(3);
 
-    const arrowLen = ARROW_MIN + beta * (ARROW_MAX - ARROW_MIN);
-    document.getElementById('arrow-shaft').style.width = arrowLen + 'px';
+    document.getElementById('person-img').style.transform =
+      `scaleX(${scale})`;
+
+    document.getElementById('gamma-out').textContent =
+      g.toFixed(3);
+
+    document.getElementById('length-out').textContent =
+      (100 / g).toFixed(1) + '%';
+
+    document.getElementById('speed-out').textContent =
+      beta.toFixed(3) + ' c';
+
+    document.getElementById('arrow-speed-label').textContent =
+      beta.toFixed(3) + ' c';
+
+    const arrowLen =
+      ARROW_MIN + beta * (ARROW_MAX - ARROW_MIN);
+
+    document.getElementById('arrow-shaft').style.width =
+      arrowLen + 'px';
+
+    /* MOVE ARROW WITH CONTRACTED EDGE */
+
+    document.getElementById('velocity-arrow').style.left =
+      (contractedWidth + 10) + 'px';
   }
 
   document.getElementById('v').addEventListener('input', update);
+
   update();
 </script>
 </body>
