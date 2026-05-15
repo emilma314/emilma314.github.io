@@ -560,53 +560,41 @@ function animate(timestamp){
 
   /* GROUND FRAME */
 
-  const trainMotion =
-    elapsed * beta * 120;
+    /* keep train fixed onscreen */
+    groundTrain.style.left = '50%';
+    groundTrain.style.transform = 'translate(-50%, -50%)';
 
-  const groundX =
-    120 + trainMotion;
+    /*
+    Light still moves diagonally because
+    horizontal displacement depends on velocity.
+    */
 
-  const groundY =
+    const horizontalAmplitude =
+    beta * 140;
+
+    /*
+    triangle wave:
+    -1 → +1 → -1
+    */
+    const horizontalPhase =
+    Math.sin(elapsed * Math.PI / (TRAIN_PERIOD * gamma));
+
+    const groundX =
+    120 + horizontalAmplitude * horizontalPhase;
+
+    const groundY =
     30 + groundPhase * TRAIN_HEIGHT;
 
-  groundTrain.style.left =
-    (TRAIN_LEFT + trainMotion) + 'px';
+    groundLight.style.left =
+    groundX + 'px';
 
-  groundLight.style.left =
-    groundX + trainMotion + 'px';
-
-  groundLight.style.top =
+    groundLight.style.top =
     groundY + 'px';
 
-  drawPath(
-    groundX + trainMotion,
+    drawPath(
+    groundX,
     groundY
-  );
-
-  document.getElementById('train-count').textContent =
-    Math.floor(trainCycle);
-
-  document.getElementById('ground-count').textContent =
-    Math.floor(groundCycle);
-
-  requestAnimationFrame(animate);
-
-}
-
-function drawPath(x,y){
-
-  const svg = document.getElementById('path-svg');
-
-  svg.innerHTML = `
-    <line
-      x1="${x}"
-      y1="${y}"
-      x2="${x-70}"
-      y2="${y-70}"
-      stroke="rgba(79,195,247,0.18)"
-      stroke-width="2"
-    />
-  `;
+    );
 
 }
 
