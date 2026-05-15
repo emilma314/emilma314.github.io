@@ -127,24 +127,19 @@
       <text id="v-arrow-label" x="275" y="68" fill="#4fc3f7" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">v</text>
     </g>
 
-    <!-- stick figure on escalator -->
-    <!-- body at x=220 -->
+    <!-- stick figure on escalator, centered at x=220 -->
     <g id="figure">
-      <!-- head -->
       <circle cx="220" cy="68" r="8" fill="none" stroke="#e8eaf0" stroke-width="1.5"/>
-      <!-- body -->
       <line x1="220" y1="76" x2="220" y2="96" stroke="#e8eaf0" stroke-width="1.5"/>
-      <!-- arms -->
       <line x1="205" y1="84" x2="235" y2="84" stroke="#e8eaf0" stroke-width="1.5"/>
-      <!-- legs -->
       <line x1="220" y1="96" x2="210" y2="112" stroke="#e8eaf0" stroke-width="1.5"/>
       <line x1="220" y1="96" x2="230" y2="112" stroke="#e8eaf0" stroke-width="1.5"/>
     </g>
 
-    <!-- u′ arrow: from figure, pointing right, scales with u′ -->
+    <!-- u′ arrow: starts at figure center x=220, at body midpoint y=86 -->
     <g id="u-arrow-group">
-      <line id="u-arrow-line" x1="228" y1="84" x2="348" y2="84" stroke="#ef9f27" stroke-width="2" marker-end="url(#arrowAmber)"/>
-      <text id="u-arrow-label" x="288" y="98" fill="#ef9f27" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">u′</text>
+      <line id="u-arrow-line" x1="220" y1="86" x2="340" y2="86" stroke="#ef9f27" stroke-width="2" marker-end="url(#arrowAmber)"/>
+      <text id="u-arrow-label" x="280" y="100" fill="#ef9f27" font-family="'JetBrains Mono', monospace" font-size="12" text-anchor="middle" font-style="italic">u′</text>
     </g>
 
     <!-- u result arrow along ground -->
@@ -241,13 +236,13 @@
           showLine: false,
         },
         {
-        label: 'classical result',
-        data: [],
-        backgroundColor: '#4fc3f7',
-        borderColor: '#4fc3f7',
-        pointRadius: 6,
-        pointHoverRadius: 8,
-        showLine: false,
+          label: 'classical result',
+          data: [],
+          backgroundColor: '#4fc3f7',
+          borderColor: '#4fc3f7',
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          showLine: false,
         },
       ]
     },
@@ -283,10 +278,8 @@
     }
   });
 
-  // SVG arrow scaling
-  // v arrow: starts at x=220, max length ~180px for v=1
   const V_ARROW_START_X = 220;
-  const U_ARROW_START_X = 228;
+  const U_ARROW_START_X = 220;
   const U_RESULT_START_X = 60;
   const MAX_ARROW = 180;
 
@@ -295,15 +288,12 @@
     const uLen = Math.max(u * MAX_ARROW, 6);
     const relLen = Math.max(rel * MAX_ARROW, 6);
 
-    // v arrow (blue, above escalator)
     document.getElementById('v-arrow-line').setAttribute('x2', V_ARROW_START_X + vLen);
     document.getElementById('v-arrow-label').setAttribute('x', V_ARROW_START_X + vLen / 2);
 
-    // u′ arrow (amber, from figure arms)
     document.getElementById('u-arrow-line').setAttribute('x2', U_ARROW_START_X + uLen);
     document.getElementById('u-arrow-label').setAttribute('x', U_ARROW_START_X + uLen / 2);
 
-    // u result arrow (green, along ground)
     document.getElementById('u-result-line').setAttribute('x2', U_RESULT_START_X + relLen);
     document.getElementById('u-result-label').setAttribute('x', U_RESULT_START_X + relLen / 2);
   }
