@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Continuity Equation — PDE Explorer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+onload="renderMathInElement(document.body,{
+delimiters:[
+{left:'$$',right:'$$',display:true},
+{left:'$',right:'$',display:false}
+]})">
+</script>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --bg2:#f7f7f5;
+  --border:#ddddd8;
+  --text:#1a1a1a;
+  --muted:#666660;
+  --accent:#2563eb;
+  --accent-light:#eff6ff;
+  --green:#16a34a;
+  --red:#dc2626;
+
+  --font:'Inter',system-ui,sans-serif;
+  --font-serif:'Lora',Georgia,serif;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:17px;
+  line-height:1.75;
+}
+
+.page-wrap{
+  max-width:780px;
+  margin:0 auto;
+  padding:0 2rem;
+}
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:white;
+  border-bottom:1px solid var(--border);
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  height:52px;
+  padding:0 2rem;
+}
+
+.nav-logo{
+  font-size:0.8rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  text-decoration:none;
+}
+
+.nav-links{
+  display:flex;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:var(--muted);
+
+  font-size:0.85rem;
+  font-weight:500;
+
+  padding:0.35rem 0.9rem;
+  border-radius:4px;
+
+  transition:0.15s;
+}
+
+.nav-links a:hover{
+  background:var(--bg2);
+  color:var(--text);
+}
+
+.nav-links a.active{
+  background:var(--accent-light);
+  color:var(--accent);
+}
+
+.hero{
+  padding:4rem 0 2.5rem;
+  border-bottom:1px solid var(--border);
+}
+
+.page-tag{
+  display:inline-block;
+
+  font-size:0.72rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+
+  color:var(--accent);
+  background:var(--accent-light);
+
+  padding:0.2rem 0.6rem;
+  border-radius:3px;
+
+  margin-bottom:1.2rem;
+}
+
+.hero h1{
+  font-family:var(--font-serif);
+  font-size:2.6rem;
+  font-weight:600;
+  line-height:1.2;
+
+  margin-bottom:1rem;
+}
+
+.tagline{
+  color:var(--muted);
+  max-width:620px;
+  margin-bottom:1.8rem;
+}
+
+.hero-eq{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+
+  padding:1.2rem 1.8rem;
+  border-radius:0 6px 6px 0;
+
+  display:inline-block;
+}
+
+.section{
+  padding:3rem 0;
+  border-bottom:1px solid var(--border);
+}
+
+.section:last-child{
+  border-bottom:none;
+}
+
+h2{
+  font-family:var(--font-serif);
+  font-size:1.7rem;
+  margin-bottom:1rem;
+}
+
+p{
+  margin-bottom:1rem;
+  color:#2a2a2a;
+}
+
+.callout{
+  background:var(--accent-light);
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+
+  padding:1.1rem 1.4rem;
+  border-radius:6px;
+
+  margin:1.5rem 0;
+}
+
+.eq-block{
+  background:var(--bg2);
+  border:1px solid var(--border);
+
+  padding:1rem 1.4rem;
+  border-radius:6px;
+
+  text-align:center;
+
+  margin:1rem 0;
+}
+
+.demo-wrap{
+  background:var(--bg2);
+  border:1px solid var(--border);
+
+  border-radius:10px;
+  padding:1.5rem;
+
+  margin-top:1.5rem;
+}
+
+.diagram-caption{
+  margin-top:1rem;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.95rem;
+}
+
+.takeaways{
+  padding-left:1.3rem;
+  line-height:2.1;
+}
+
+footer{
+  border-top:1px solid var(--border);
+
+  max-width:780px;
+  margin:0 auto;
+
+  padding:2rem;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+footer p{
+  margin:0;
+  font-size:0.8rem;
+  color:var(--muted);
+}
+
+.next-btn{
+  text-decoration:none;
+  background:var(--accent);
+  color:white;
+
+  padding:0.5rem 1.1rem;
+  border-radius:5px;
+
+  font-size:0.88rem;
+  font-weight:500;
+}
+
+@media (max-width:600px){
+
+  nav{
+    padding:0 1rem;
+  }
+
+  .page-wrap{
+    padding:0 1.2rem;
+  }
+
+  .hero h1{
+    font-size:2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">PDE Explorer</a>
+
+  <div class="nav-links">
+    <a href="continuity.html" class="active">Continuity</a>
+    <a href="wave.html">Wave</a>
+    <a href="schrodinger.html">Schrödinger</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+
+  <div class="hero">
+
+    <div class="page-tag">
+      Equation 1 of 3
+    </div>
+
+    <h1>The Continuity Equation</h1>
+
+    <p class="tagline">
+      Stuff doesn't just appear or disappear.
+      If density decreases somewhere,
+      something must be flowing away.
+    </p>
+
+    <div class="hero-eq">
+      $$\frac{\partial \rho}{\partial t}
+      +
+      \nabla \cdot \mathbf{J}
+      =0$$
+    </div>
+
+  </div>
+
+  <!-- EXPLANATION -->
+
+  <div class="section">
+
+    <h2>What does it say?</h2>
+
+    <p>
+      The continuity equation is a conservation law.
+      It says that whatever you're tracking —
+      mass, charge, probability, people —
+      cannot spontaneously appear or vanish.
+      It can only move from place to place.
+    </p>
+
+    <div class="callout">
+      <strong>
+      If more stuff flows out of a tiny region than flows in,
+      the amount inside must decrease.
+      </strong>
+    </div>
+
+    <p>
+      The equation connects two ideas:
+    </p>
+
+    <div class="eq-block">
+      $$\frac{\partial \rho}{\partial t}
+      =
+      -\nabla\cdot\mathbf{J}$$
+    </div>
+
+    <p>
+      The left side measures how density changes over time.
+      The right side measures how much flow spreads outward.
+    </p>
+
+  </div>
+
+  <!-- DIAGRAM -->
+
+  <div class="section">
+
+    <h2>A local conservation law</h2>
+
+    <p>
+      Imagine a tiny region of space.
+      If more stuff leaves the region than enters,
+      the density inside must decrease.
+    </p>
+
+    <div class="demo-wrap">
+
+      <svg width="100%" viewBox="0 0 700 320"
+      style="display:block">
+
+        <!-- Background -->
+        <rect x="0" y="0"
+        width="700"
+        height="320"
+        rx="12"
+
+        fill="#fafaf9"
+        stroke="#ddddd8"/>
+
+        <!-- Control volume -->
+        <rect
+        x="240"
+        y="70"
+        width="220"
+        height="180"
+
+        rx="10"
+
+        fill="#dbeafe"
+        stroke="#2563eb"
+        stroke-width="3"/>
+
+        <!-- rho -->
+        <text
+        x="350"
+        y="165"
+
+        text-anchor="middle"
+
+        font-size="42"
+        fill="#1e3a8a"
+
+        font-family="serif">
+        ρ
+        </text>
+
+        <!-- incoming arrows -->
+
+        <line
+        x1="80"
+        y1="120"
+        x2="220"
+        y2="120"
+
+        stroke="#16a34a"
+        stroke-width="6"/>
+
+        <polygon
+        points="220,120 198,108 198,132"
+        fill="#16a34a"/>
+
+        <line
+        x1="80"
+        y1="200"
+        x2="220"
+        y2="200"
+
+        stroke="#16a34a"
+        stroke-width="6"/>
+
+        <polygon
+        points="220,200 198,188 198,212"
+        fill="#16a34a"/>
+
+        <!-- outgoing arrows -->
+
+        <line
+        x1="480"
+        y1="100"
+        x2="620"
+        y2="100"
+
+        stroke="#dc2626"
+        stroke-width="6"/>
+
+        <polygon
+        points="620,100 598,88 598,112"
+        fill="#dc2626"/>
+
+        <line
+        x1="480"
+        y1="160"
+        x2="620"
+        y2="160"
+
+        stroke="#dc2626"
+        stroke-width="6"/>
+
+        <polygon
+        points="620,160 598,148 598,172"
+        fill="#dc2626"/>
+
+        <line
+        x1="480"
+        y1="220"
+        x2="620"
+        y2="220"
+
+        stroke="#dc2626"
+        stroke-width="6"/>
+
+        <polygon
+        points="620,220 598,208 598,232"
+        fill="#dc2626"/>
+
+        <!-- labels -->
+
+        <text
+        x="110"
+        y="90"
+
+        font-size="20"
+        fill="#15803d"
+        font-family="Inter">
+        flux in
+        </text>
+
+        <text
+        x="500"
+        y="70"
+
+        font-size="20"
+        fill="#b91c1c"
+        font-family="Inter">
+        more flux out
+        </text>
+
+        <!-- bottom -->
+
+        <text
+        x="350"
+        y="285"
+
+        text-anchor="middle"
+
+        font-size="22"
+        fill="#444"
+
+        font-family="Inter">
+
+        More leaves than enters
+        </text>
+
+        <text
+        x="350"
+        y="312"
+
+        text-anchor="middle"
+
+        font-size="22"
+        fill="#2563eb"
+
+        font-family="Inter">
+
+        ⇒ density decreases
+        </text>
+
+      </svg>
+
+      <div class="diagram-caption">
+        Positive divergence means flow spreads outward,
+        so the density inside decreases.
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- APPLICATIONS -->
+
+  <div class="section">
+
+    <h2>Where does this appear?</h2>
+
+    <p>
+      The exact same PDE appears across physics.
+      Only the interpretation changes.
+    </p>
+
+    <div class="eq-block">
+      Fluid mechanics:
+      $$\rho = \text{mass density}$$
+    </div>
+
+    <div class="eq-block">
+      Electromagnetism:
+      $$\rho = \text{charge density}$$
+    </div>
+
+    <div class="eq-block">
+      Quantum mechanics:
+      $$\rho = |\psi|^2$$
+    </div>
+
+  </div>
+
+  <!-- TAKEAWAYS -->
+
+  <div class="section">
+
+    <h2>Key takeaways</h2>
+
+    <ul class="takeaways">
+      <li>
+        The continuity equation expresses conservation.
+      </li>
+
+      <li>
+        Density changes only because stuff flows.
+      </li>
+
+      <li>
+        Positive divergence means stuff spreads outward.
+      </li>
+
+      <li>
+        Negative divergence means stuff converges inward.
+      </li>
+
+      <li>
+        The same PDE appears throughout physics.
+      </li>
+    </ul>
+
+  </div>
+
+</div>
+
+<footer>
+
+  <p>
+    Based on Hassani,
+    <em>Mathematical Methods for Students of Physics</em>
+  </p>
+
+  <a href="wave.html" class="next-btn">
+    Next: Wave Equation →
+  </a>
+
+</footer>
+
+</body>
+</html>
