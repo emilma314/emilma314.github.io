@@ -171,13 +171,12 @@ p:last-child { margin-bottom: 0; }
 .deriv-toggle .arrow { transition: transform 0.2s; font-size: 0.75rem; }
 .deriv-toggle.open .arrow { transform: rotate(90deg); }
 .deriv-body {
-  display: none;
-  border: 1px solid var(--border); border-top: none;
-  border-radius: 0 0 6px 6px;
-  padding: 1.5rem; background: var(--bg2);
-  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--bg2);
+  margin-top: 1rem;
 }
-.deriv-body.open { display: block; }
 .deriv-step { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
 .deriv-step:last-child { margin-bottom: 0; }
 .step-n {
@@ -362,10 +361,10 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       </tbody>
     </table>
 
-    <button class="deriv-toggle" onclick="toggleDeriv(this)">
-      <span class="arrow">▶</span> Show me where this equation comes from
-    </button>
-    <div class="deriv-body">
+  
+    <h2 style="margin-top:2.5rem;">Derivation</h2>
+
+      <div class="deriv-body">
       <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.2rem;">
         Schrödinger's original argument was partly heuristic, more of an educated guess
         guided by wave mechanics and the de Broglie relations.
@@ -609,13 +608,6 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
   <p>Based on Hassani, <em>Mathematical Methods for Students of Physics</em>, 2nd ed. (2009)</p>
   <a href="wave.html" class="next-btn">← Wave Equation</a>
 </footer>
-
-<script>
-function toggleDeriv(btn) {
-  btn.classList.toggle('open');
-  btn.nextElementSibling.classList.toggle('open');
-}
-</script>
 
 </body>
 </html>
