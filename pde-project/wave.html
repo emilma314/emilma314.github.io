@@ -333,7 +333,7 @@ footer p{
     <div class="hero-eq">
       $$\frac{\partial^2 u}{\partial t^2}
       =
-      c^2\nabla^2 u$$
+      v^2\nabla^2 u$$
     </div>
 
   </div>
@@ -378,6 +378,121 @@ footer p{
 
   </div>
 
+
+  <!-- VARIABLES -->
+
+  <div class="section">
+
+    <h2>Variables and symbols</h2>
+
+    <p>
+      The wave equation contains only a few quantities,
+      but each has a specific physical meaning.
+    </p>
+
+    <div class="eq-block">
+      $$\frac{\partial^2 u}{\partial t^2}
+      =
+      v^2\nabla^2 u$$
+    </div>
+
+    <p>
+      <strong>\(u\)</strong> represents the quantity that is waving.
+      Depending on the application,
+      it may describe the displacement of a string,
+      a change in air pressure,
+      or an electric field.
+    </p>
+
+    <p>
+      <strong>\(t\)</strong> is time.
+      The equation tracks how the wave changes as time passes.
+    </p>
+
+    <p>
+      <strong>\(\frac{\partial^2 u}{\partial t^2}\)</strong>
+      is the second derivative with respect to time.
+      It measures the acceleration of the wave.
+    </p>
+
+    <p>
+      <strong>\(\nabla^2 u\)</strong>,
+      called the Laplacian,
+      measures the curvature of the wave in space.
+      Large curvature produces stronger restoring forces.
+    </p>
+
+    <p>
+      <strong>\(c\)</strong> is the wave speed.
+      It determines how quickly disturbances travel through the medium.
+    </p>
+
+    <div class="callout">
+      <strong>
+        Curvature determines acceleration,
+        while the constant \(c\) determines how fast the wave propagates.
+      </strong>
+    </div>
+
+  </div>
+
+  <!-- SOLUTION -->
+
+  <div class="section">
+
+    <h2>A simple solution</h2>
+
+    <p>
+      The wave equation has many solutions.
+      One of the most important is a traveling sine wave:
+    </p>
+
+    <div class="eq-block">
+      $$u(x,t)=A\sin(kx-\omega t)$$
+    </div>
+
+    <p>
+      This function represents a wave moving to the right
+      while maintaining the same shape.
+    </p>
+
+    <p>
+      The parameters are:
+    </p>
+
+    <ul class="takeaways">
+      <li><strong>\(A\)</strong> — amplitude (maximum displacement)</li>
+      <li><strong>\(k\)</strong> — wave number, related to wavelength</li>
+      <li><strong>\(\omega\)</strong> — angular frequency</li>
+      <li><strong>\(x\)</strong> — position</li>
+      <li><strong>\(t\)</strong> — time</li>
+    </ul>
+
+    <p>
+      Substituting this function into the wave equation shows that it is a
+      valid solution whenever
+    </p>
+
+    <div class="eq-block">
+      $$\omega = ck$$
+    </div>
+
+    <p>
+      This condition links the wave's frequency,
+      wavelength,
+      and propagation speed.
+      It ensures that the disturbance travels through space at speed \(c\).
+    </p>
+
+    <div class="callout">
+      <strong>
+        A traveling sine wave is one example of a solution.
+        Any combination of such waves is also a solution,
+        which is why the wave equation can model complex wave motion.
+      </strong>
+    </div>
+
+  </div>
   <!-- DIAGRAM -->
 
   <div class="section">
