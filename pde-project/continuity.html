@@ -8,277 +8,231 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-
-<script defer
-src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-
-<script defer
-src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-onload="renderMathInElement(document.body,{
-delimiters:[
-{left:'$$',right:'$$',display:true},
-{left:'$',right:'$',display:false}
-]})">
-</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[
+    {left:'$$',right:'$$',display:true},
+    {left:'$',right:'$',display:false}
+  ]})"></script>
 
 <style>
-:root{
-  --bg:#ffffff;
-  --bg2:#f7f7f5;
-  --border:#ddddd8;
-  --text:#1a1a1a;
-  --muted:#666660;
-  --accent:#2563eb;
-  --accent-light:#eff6ff;
-  --green:#16a34a;
-  --red:#dc2626;
-
-  --font:'Inter',system-ui,sans-serif;
-  --font-serif:'Lora',Georgia,serif;
+:root {
+  --bg: #ffffff;
+  --bg2: #f7f7f5;
+  --border: #ddddd8;
+  --text: #1a1a1a;
+  --muted: #666660;
+  --accent: #2563eb;
+  --accent-light: #eff6ff;
+  --green: #16a34a;
+  --red: #dc2626;
+  --font: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.75;
 }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:17px;
-  line-height:1.75;
+.page-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.page-wrap{
-  max-width:780px;
-  margin:0 auto;
-  padding:0 2rem;
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  height: 52px; padding: 0 2rem;
+}
+.nav-logo {
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+}
+.nav-links { display: flex; }
+.nav-links a {
+  text-decoration: none; color: var(--muted);
+  font-size: 0.85rem; font-weight: 500;
+  padding: 0.35rem 0.9rem; border-radius: 4px;
+  transition: 0.15s;
+}
+.nav-links a:hover { background: var(--bg2); color: var(--text); }
+.nav-links a.active { background: var(--accent-light); color: var(--accent); }
+
+.hero {
+  padding: 4rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-tag {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent); background: var(--accent-light);
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 2.6rem; font-weight: 600; line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.tagline { color: var(--muted); max-width: 620px; margin-bottom: 1.8rem; }
+.hero-eq {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 1.2rem 1.8rem;
+  border-radius: 0 6px 6px 0;
+  display: inline-block;
 }
 
-nav{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:white;
-  border-bottom:1px solid var(--border);
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
 
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+h2 { font-family: var(--font-serif); font-size: 1.7rem; margin-bottom: 1rem; }
+h3 { font-size: 1rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+p { margin-bottom: 1rem; color: #2a2a2a; }
+p:last-child { margin-bottom: 0; }
 
-  height:52px;
-  padding:0 2rem;
+.callout {
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 1.1rem 1.4rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
 }
 
-.nav-logo{
-  font-size:0.8rem;
-  font-weight:600;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-decoration:none;
+.eq-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1rem 1.4rem;
+  border-radius: 6px;
+  text-align: center;
+  margin: 1rem 0;
+  overflow-x: auto;
 }
 
-.nav-links{
-  display:flex;
+/* symbol table */
+.symbol-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1.5rem 0; font-size: 0.9rem;
+}
+.symbol-table th {
+  text-align: left; padding: 0.5rem 0.8rem;
+  background: var(--bg2);
+  font-size: 0.78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.symbol-table td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.symbol-table tr:last-child td { border-bottom: none; }
+.symbol-table .sym { font-family: monospace; font-size: 0.95rem; }
+
+/* collapsible derivation */
+.deriv-toggle {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.88rem; font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer; color: var(--muted);
+  width: 100%; text-align: left;
+  transition: background 0.15s, color 0.15s;
+  margin-top: 1.5rem;
+}
+.deriv-toggle:hover { background: var(--bg2); color: var(--text); }
+.deriv-toggle .arrow { transition: transform 0.2s; font-size: 0.75rem; }
+.deriv-toggle.open .arrow { transform: rotate(90deg); }
+.deriv-body {
+  display: none;
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 1.5rem; background: var(--bg2);
+}
+.deriv-body.open { display: block; }
+.deriv-step { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
+.deriv-step:last-child { margin-bottom: 0; }
+.step-n {
+  flex-shrink: 0; width: 26px; height: 26px;
+  background: var(--accent); color: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 600; margin-top: 3px;
+}
+.deriv-step p { font-size: 0.92rem; margin-bottom: 0.5rem; }
+
+/* pipe sim */
+.demo-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+#pipe-canvas {
+  display: block; width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.diagram-caption {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
-.nav-links a{
-  text-decoration:none;
-  color:var(--muted);
+/* applications */
+.app-blocks { margin-top: 1rem; }
 
-  font-size:0.85rem;
-  font-weight:500;
+.takeaways { padding-left: 1.3rem; line-height: 2.1; }
 
-  padding:0.35rem 0.9rem;
-  border-radius:4px;
-
-  transition:0.15s;
+footer {
+  border-top: 1px solid var(--border);
+  max-width: 780px; margin: 0 auto;
+  padding: 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.next-btn {
+  text-decoration: none; background: var(--accent); color: white;
+  padding: 0.5rem 1.1rem; border-radius: 5px;
+  font-size: 0.88rem; font-weight: 500;
 }
 
-.nav-links a:hover{
-  background:var(--bg2);
-  color:var(--text);
-}
-
-.nav-links a.active{
-  background:var(--accent-light);
-  color:var(--accent);
-}
-
-.hero{
-  padding:4rem 0 2.5rem;
-  border-bottom:1px solid var(--border);
-}
-
-.page-tag{
-  display:inline-block;
-
-  font-size:0.72rem;
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:0.1em;
-
-  color:var(--accent);
-  background:var(--accent-light);
-
-  padding:0.2rem 0.6rem;
-  border-radius:3px;
-
-  margin-bottom:1.2rem;
-}
-
-.hero h1{
-  font-family:var(--font-serif);
-  font-size:2.6rem;
-  font-weight:600;
-  line-height:1.2;
-
-  margin-bottom:1rem;
-}
-
-.tagline{
-  color:var(--muted);
-  max-width:620px;
-  margin-bottom:1.8rem;
-}
-
-.hero-eq{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-left:4px solid var(--accent);
-
-  padding:1.2rem 1.8rem;
-  border-radius:0 6px 6px 0;
-
-  display:inline-block;
-}
-
-.section{
-  padding:3rem 0;
-  border-bottom:1px solid var(--border);
-}
-
-.section:last-child{
-  border-bottom:none;
-}
-
-h2{
-  font-family:var(--font-serif);
-  font-size:1.7rem;
-  margin-bottom:1rem;
-}
-
-p{
-  margin-bottom:1rem;
-  color:#2a2a2a;
-}
-
-.callout{
-  background:var(--accent-light);
-  border:1px solid var(--border);
-  border-left:4px solid var(--accent);
-
-  padding:1.1rem 1.4rem;
-  border-radius:6px;
-
-  margin:1.5rem 0;
-}
-
-.eq-block{
-  background:var(--bg2);
-  border:1px solid var(--border);
-
-  padding:1rem 1.4rem;
-  border-radius:6px;
-
-  text-align:center;
-
-  margin:1rem 0;
-}
-
-.demo-wrap{
-  background:var(--bg2);
-  border:1px solid var(--border);
-
-  border-radius:10px;
-  padding:1.5rem;
-
-  margin-top:1.5rem;
-}
-
-.diagram-caption{
-  margin-top:1rem;
-  text-align:center;
-  color:var(--muted);
-  font-size:0.95rem;
-}
-
-.takeaways{
-  padding-left:1.3rem;
-  line-height:2.1;
-}
-
-footer{
-  border-top:1px solid var(--border);
-
-  max-width:780px;
-  margin:0 auto;
-
-  padding:2rem;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  gap:1rem;
-  flex-wrap:wrap;
-}
-
-footer p{
-  margin:0;
-  font-size:0.8rem;
-  color:var(--muted);
-}
-
-.next-btn{
-  text-decoration:none;
-  background:var(--accent);
-  color:white;
-
-  padding:0.5rem 1.1rem;
-  border-radius:5px;
-
-  font-size:0.88rem;
-  font-weight:500;
-}
-
-@media (max-width:600px){
-
-  nav{
-    padding:0 1rem;
-  }
-
-  .page-wrap{
-    padding:0 1.2rem;
-  }
-
-  .hero h1{
-    font-size:2rem;
-  }
+@media (max-width: 600px) {
+  nav { padding: 0 1rem; }
+  .page-wrap { padding: 0 1.2rem; }
+  .hero h1 { font-size: 2rem; }
 }
 </style>
 </head>
-
 <body>
 
 <nav>
   <a class="nav-logo" href="#">PDE Explorer</a>
-
   <div class="nav-links">
     <a href="continuity.html" class="active">Continuity</a>
     <a href="wave.html">Wave</a>
@@ -289,325 +243,370 @@ footer p{
 <div class="page-wrap">
 
   <!-- HERO -->
-
   <div class="hero">
-
-    <div class="page-tag">
-      Equation 1 of 3
-    </div>
-
+    <div class="page-tag">Equation 1 of 3</div>
     <h1>The Continuity Equation</h1>
-
     <p class="tagline">
       Stuff doesn't just appear or disappear.
-      If density decreases somewhere,
-      something must be flowing away.
+      If density decreases somewhere, something must be flowing away.
     </p>
-
     <div class="hero-eq">
-      $$\frac{\partial \rho}{\partial t}
-      +
-      \nabla \cdot \mathbf{J}
-      =0$$
+      $$\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J} = 0$$
     </div>
-
   </div>
 
-  <!-- EXPLANATION -->
-
+  <!-- WHAT DOES IT SAY -->
   <div class="section">
-
     <h2>What does it say?</h2>
-
     <p>
-      The continuity equation is a conservation law.
+      The continuity equation is a <strong>conservation law</strong>.
       It says that whatever you're tracking —
       mass, charge, probability, people —
       cannot spontaneously appear or vanish.
       It can only move from place to place.
     </p>
-
     <div class="callout">
-      <strong>
-      If more stuff flows out of a tiny region than flows in,
-      the amount inside must decrease.
-      </strong>
+      <strong>If more stuff flows out of a tiny region than flows in,
+      the amount inside must decrease — by exactly that much.</strong>
     </div>
-
     <p>
-      The equation connects two ideas:
+      Rearranged, the equation says:
     </p>
-
     <div class="eq-block">
-      $$\frac{\partial \rho}{\partial t}
-      =
-      -\nabla\cdot\mathbf{J}$$
+      $$\frac{\partial \rho}{\partial t} = -\nabla \cdot \mathbf{J}$$
     </div>
-
     <p>
-      The left side measures how density changes over time.
-      The right side measures how much flow spreads outward.
+      The left side is how fast the density is changing at a point.
+      The right side is how much the flow is spreading outward from that point.
+      They are always equal and opposite.
     </p>
 
+    <h3>Breaking down the symbols</h3>
+
+    <table class="symbol-table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>What it means</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sym">$\rho$</td>
+          <td>rho — density</td>
+          <td>
+            How much "stuff" is packed into a tiny region at a given point in space.
+            In a fluid it's mass per volume. In electromagnetism it's charge per volume.
+            In quantum mechanics it's probability per volume.
+          </td>
+        </tr>
+        <tr>
+          <td class="sym">$\mathbf{J}$</td>
+          <td>J — flux</td>
+          <td>
+            A vector that describes the flow of stuff. It has both a magnitude
+            (how much is flowing) and a direction (which way).
+            Think of it as an arrow attached to every point in space, showing the current.
+          </td>
+        </tr>
+        <tr>
+          <td class="sym">$\partial \rho / \partial t$</td>
+          <td>time derivative of ρ</td>
+          <td>
+            How fast the density is changing right now at this point.
+            Negative means density is dropping; positive means it's growing.
+          </td>
+        </tr>
+        <tr>
+          <td class="sym">$\nabla \cdot \mathbf{J}$</td>
+          <td>divergence of J</td>
+          <td>
+            How much the flow is "spreading out" from a point — see below.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>What is divergence?</h3>
+    <p>
+      Divergence is the trickiest symbol in the equation, so it's worth pausing on.
+      $\nabla \cdot \mathbf{J}$ at a point measures whether the flow arrows near that
+      point are <em>spreading outward</em> or <em>converging inward</em>.
+    </p>
+    <p>
+      Imagine standing in the middle of a room watching people walk around you:
+    </p>
+    <div class="eq-block" style="text-align:left; padding: 1.2rem 1.8rem;">
+      <strong>Positive divergence</strong> — everyone near you is walking away.
+      Like standing at the center of an explosion.
+      The flow is spreading out, so whatever is here is leaving.
+      Density here will <em>decrease</em>.<br><br>
+      <strong>Negative divergence</strong> — everyone is walking toward you.
+      Like a drain pulling things in.
+      Stuff is converging, so density here will <em>increase</em>.<br><br>
+      <strong>Zero divergence</strong> — as much flows in as flows out.
+      Density stays the same.
+    </div>
+    <p>
+      The continuity equation says these two things are always linked:
+      positive divergence forces density down; negative divergence forces it up.
+      They always balance exactly.
+    </p>
+
+    <button class="deriv-toggle" onclick="toggleDeriv(this)">
+      <span class="arrow">▶</span> Show me the derivation (requires multivariable calculus)
+    </button>
+    <div class="deriv-body">
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.2rem;">
+        The formal proof uses only one key theorem from calculus — the divergence theorem.
+      </p>
+      <div class="deriv-step">
+        <div class="step-n">1</div>
+        <div>
+          <p>Pick any fixed volume $V$ with boundary surface $S$.
+             The total amount of stuff inside is:</p>
+          <div class="eq-block">$$Q(t) = \int_V \rho\; dV$$</div>
+        </div>
+      </div>
+      <div class="deriv-step">
+        <div class="step-n">2</div>
+        <div>
+          <p>Conservation means $Q$ can only change by stuff flowing across $S$.
+             Outward flux decreases $Q$, so:</p>
+          <div class="eq-block">$$\frac{dQ}{dt} = -\oint_S \mathbf{J} \cdot d\mathbf{A}$$</div>
+          <p>The left side is also $\int_V \frac{\partial \rho}{\partial t}\,dV$
+             since $V$ is fixed.</p>
+        </div>
+      </div>
+      <div class="deriv-step">
+        <div class="step-n">3</div>
+        <div>
+          <p>The <strong>divergence theorem</strong> converts the surface integral
+             to a volume integral:</p>
+          <div class="eq-block">$$\oint_S \mathbf{J} \cdot d\mathbf{A} = \int_V \nabla \cdot \mathbf{J}\;dV$$</div>
+        </div>
+      </div>
+      <div class="deriv-step">
+        <div class="step-n">4</div>
+        <div>
+          <p>Combining everything:</p>
+          <div class="eq-block">$$\int_V \!\left(\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J}\right) dV = 0$$</div>
+          <p>
+            This must hold for <em>every</em> possible volume $V$.
+            The only way that works is if the integrand itself is zero everywhere:
+          </p>
+          <div class="eq-block">$$\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J} = 0$$</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- DIAGRAM -->
-
+  <!-- PIPE SIM -->
   <div class="section">
-
-    <h2>A local conservation law</h2>
-
+    <h2>See it in action</h2>
     <p>
-      Imagine a tiny region of space.
-      If more stuff leaves the region than enters,
-      the density inside must decrease.
+      Water flows through a pipe with a narrow section in the middle.
+      Because water can't appear or disappear, squeezing into a narrower pipe
+      forces the particles to crowd together and speed up.
+      When the pipe widens again, they spread out and slow down.
+    </p>
+    <p>
+      This is the continuity equation made visible: the density and
+      the flow speed always adjust together so that nothing is created or lost.
     </p>
 
     <div class="demo-wrap">
-
-      <svg width="100%" viewBox="0 0 700 320"
-      style="display:block">
-
-        <!-- Background -->
-        <rect x="0" y="0"
-        width="700"
-        height="320"
-        rx="12"
-
-        fill="#fafaf9"
-        stroke="#ddddd8"/>
-
-        <!-- Control volume -->
-        <rect
-        x="240"
-        y="70"
-        width="220"
-        height="180"
-
-        rx="10"
-
-        fill="#dbeafe"
-        stroke="#2563eb"
-        stroke-width="3"/>
-
-        <!-- rho -->
-        <text
-        x="350"
-        y="165"
-
-        text-anchor="middle"
-
-        font-size="42"
-        fill="#1e3a8a"
-
-        font-family="serif">
-        ρ
-        </text>
-
-        <!-- incoming arrows -->
-
-        <line
-        x1="80"
-        y1="120"
-        x2="220"
-        y2="120"
-
-        stroke="#16a34a"
-        stroke-width="6"/>
-
-        <polygon
-        points="220,120 198,108 198,132"
-        fill="#16a34a"/>
-
-        <line
-        x1="80"
-        y1="200"
-        x2="220"
-        y2="200"
-
-        stroke="#16a34a"
-        stroke-width="6"/>
-
-        <polygon
-        points="220,200 198,188 198,212"
-        fill="#16a34a"/>
-
-        <!-- outgoing arrows -->
-
-        <line
-        x1="480"
-        y1="100"
-        x2="620"
-        y2="100"
-
-        stroke="#dc2626"
-        stroke-width="6"/>
-
-        <polygon
-        points="620,100 598,88 598,112"
-        fill="#dc2626"/>
-
-        <line
-        x1="480"
-        y1="160"
-        x2="620"
-        y2="160"
-
-        stroke="#dc2626"
-        stroke-width="6"/>
-
-        <polygon
-        points="620,160 598,148 598,172"
-        fill="#dc2626"/>
-
-        <line
-        x1="480"
-        y1="220"
-        x2="620"
-        y2="220"
-
-        stroke="#dc2626"
-        stroke-width="6"/>
-
-        <polygon
-        points="620,220 598,208 598,232"
-        fill="#dc2626"/>
-
-        <!-- labels -->
-
-        <text
-        x="110"
-        y="90"
-
-        font-size="20"
-        fill="#15803d"
-        font-family="Inter">
-        flux in
-        </text>
-
-        <text
-        x="500"
-        y="70"
-
-        font-size="20"
-        fill="#b91c1c"
-        font-family="Inter">
-        more flux out
-        </text>
-
-        <!-- bottom -->
-
-        <text
-        x="350"
-        y="285"
-
-        text-anchor="middle"
-
-        font-size="22"
-        fill="#444"
-
-        font-family="Inter">
-
-        More leaves than enters
-        </text>
-
-        <text
-        x="350"
-        y="312"
-
-        text-anchor="middle"
-
-        font-size="22"
-        fill="#2563eb"
-
-        font-family="Inter">
-
-        ⇒ density decreases
-        </text>
-
-      </svg>
-
+      <canvas id="pipe-canvas" width="700" height="220"></canvas>
       <div class="diagram-caption">
-        Positive divergence means flow spreads outward,
-        so the density inside decreases.
+        Particles crowd together and speed up in the narrow section,
+        then spread out and slow down on the other side.
+        The total number of particles is conserved at all times.
       </div>
-
     </div>
-
   </div>
 
-  <!-- APPLICATIONS -->
-
+  <!-- WHERE IT APPEARS -->
   <div class="section">
-
     <h2>Where does this appear?</h2>
-
     <p>
-      The exact same PDE appears across physics.
-      Only the interpretation changes.
+      The exact same PDE appears across physics with different interpretations
+      of $\rho$ and $\mathbf{J}$.
     </p>
 
     <div class="eq-block">
-      Fluid mechanics:
-      $$\rho = \text{mass density}$$
+      Fluid mechanics: &nbsp; $\rho = $ mass density, &nbsp; $\mathbf{J} = \rho\mathbf{v}$
     </div>
-
     <div class="eq-block">
-      Electromagnetism:
-      $$\rho = \text{charge density}$$
+      Electromagnetism: &nbsp; $\rho = $ charge density, &nbsp; $\mathbf{J} = $ current density
     </div>
-
     <div class="eq-block">
-      Quantum mechanics:
-      $$\rho = |\psi|^2$$
+      Quantum mechanics: &nbsp; $\rho = |\psi|^2$, &nbsp; $\mathbf{J} = \frac{\hbar}{2mi}(\psi^*\nabla\psi - \psi\nabla\psi^*)$
     </div>
 
+    <p style="margin-top:1rem;">
+      In quantum mechanics this is especially striking: the Schrödinger equation
+      (which we cover on the next page) <em>automatically</em> satisfies the
+      continuity equation. That's how we know the total probability of finding a
+      particle always stays at 1 — it falls out of the math, not as an assumption.
+    </p>
   </div>
 
   <!-- TAKEAWAYS -->
-
   <div class="section">
-
     <h2>Key takeaways</h2>
-
     <ul class="takeaways">
-      <li>
-        The continuity equation expresses conservation.
-      </li>
-
-      <li>
-        Density changes only because stuff flows.
-      </li>
-
-      <li>
-        Positive divergence means stuff spreads outward.
-      </li>
-
-      <li>
-        Negative divergence means stuff converges inward.
-      </li>
-
-      <li>
-        The same PDE appears throughout physics.
-      </li>
+      <li>The continuity equation expresses conservation — nothing appears or disappears.</li>
+      <li>$\rho$ is density; $\mathbf{J}$ is the flux vector showing how stuff flows.</li>
+      <li>Positive divergence means flow is spreading outward → density decreases.</li>
+      <li>Negative divergence means flow is converging inward → density increases.</li>
+      <li>The same PDE governs mass, charge, and probability.</li>
     </ul>
-
   </div>
 
 </div>
 
 <footer>
-
-  <p>
-    Based on Hassani,
-    <em>Mathematical Methods for Students of Physics</em>
-  </p>
-
-  <a href="wave.html" class="next-btn">
-    Next: Wave Equation →
-  </a>
-
+  <p>Based on Hassani, <em>Mathematical Methods for Students of Physics</em>, 2nd ed. (2009)</p>
+  <a href="wave.html" class="next-btn">Next: Wave Equation →</a>
 </footer>
+
+<script>
+function toggleDeriv(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+
+// ── PIPE SIMULATION ─────────────────────────────────────────────
+(function () {
+  const canvas = document.getElementById('pipe-canvas');
+  const ctx    = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Pipe geometry: narrows in the middle third
+  const TOP_WIDE   = H * 0.18, BOT_WIDE   = H * 0.82;
+  const TOP_NARROW = H * 0.36, BOT_NARROW = H * 0.64;
+  const X0 = W * 0.35, X1 = W * 0.65;
+  const WIDE_W = BOT_WIDE - TOP_WIDE;
+
+  function walls(x) {
+    if (x <= X0 || x >= X1) return [TOP_WIDE, BOT_WIDE];
+    const u = Math.abs((x - X0) / (X1 - X0) - 0.5) / 0.5; // 1 at edges, 0 at center
+    const top = TOP_NARROW + (TOP_WIDE - TOP_NARROW) * u * u;
+    const bot = BOT_NARROW + (BOT_WIDE - BOT_NARROW) * u * u;
+    return [top, bot];
+  }
+
+  function pipeWidth(x)  { const [t, b] = walls(x); return b - t; }
+  function flowSpeed(x)  { return 1.8 * WIDE_W / pipeWidth(x); }
+
+  // Particles
+  let pts = [];
+  for (let i = 0; i < 190; i++) {
+    const x = Math.random() * W;
+    const [t, b] = walls(x);
+    pts.push({ x, y: t + Math.random() * (b - t), vy: 0 });
+  }
+
+  function spawnAt(x) {
+    const [t, b] = walls(x);
+    pts.push({ x, y: t + Math.random() * (b - t), vy: 0 });
+  }
+
+  function update() {
+    if (pts.length < 220 && Math.random() < 0.55) spawnAt(2);
+
+    pts.forEach(p => {
+      p.x += flowSpeed(p.x);
+      const [t, b] = walls(p.x);
+      const center = (t + b) / 2;
+      p.y += (center - p.y) * 0.01 + p.vy;
+      p.vy *= 0.85;
+      if (p.y < t + 2) { p.y = t + 2; p.vy =  Math.abs(p.vy) * 0.3; }
+      if (p.y > b - 2) { p.y = b - 2; p.vy = -Math.abs(p.vy) * 0.3; }
+    });
+    pts = pts.filter(p => p.x < W + 8);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Light background
+    ctx.fillStyle = '#f8f8f6';
+    ctx.fillRect(0, 0, W, H);
+
+    // Top wall region
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(W, 0);
+    for (let x = W; x >= 0; x -= 3) ctx.lineTo(x, walls(x)[0]);
+    ctx.closePath();
+    ctx.fillStyle = '#e8e8e4';
+    ctx.fill();
+    ctx.strokeStyle = '#9ca3af'; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let x = 0; x <= W; x += 3) {
+      x === 0 ? ctx.moveTo(x, walls(x)[0]) : ctx.lineTo(x, walls(x)[0]);
+    }
+    ctx.stroke();
+
+    // Bottom wall region
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    ctx.lineTo(W, H);
+    for (let x = W; x >= 0; x -= 3) ctx.lineTo(x, walls(x)[1]);
+    ctx.closePath();
+    ctx.fillStyle = '#e8e8e4';
+    ctx.fill();
+    ctx.beginPath();
+    for (let x = 0; x <= W; x += 3) {
+      x === 0 ? ctx.moveTo(x, walls(x)[1]) : ctx.lineTo(x, walls(x)[1]);
+    }
+    ctx.stroke();
+
+    // Particles
+    pts.forEach(p => {
+      const v = Math.min(1, (flowSpeed(p.x) - 1.8) / (1.8 * 2));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2 + v * 0.6, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(30,80,190,${0.5 + v * 0.4})`;
+      ctx.fill();
+    });
+
+    // Labels
+    ctx.font = '12px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#6b7280';
+    ctx.fillText('wide · slow · low density',  W * 0.17, H * 0.93);
+    ctx.fillStyle = '#1d4ed8';
+    ctx.fillText('narrow · fast · high density', W * 0.50, H * 0.53);
+    ctx.fillStyle = '#6b7280';
+    ctx.fillText('wide · slow · low density',  W * 0.83, H * 0.93);
+
+    // Flow arrows
+    ctx.strokeStyle = 'rgba(80,80,80,0.3)'; ctx.lineWidth = 1;
+    [0.14, 0.50, 0.86].forEach(fx => {
+      const x  = fx * W;
+      const [t, b] = walls(x);
+      const cy = (t + b) / 2;
+      const len = Math.min(20, flowSpeed(x) * 5.5);
+      ctx.beginPath();
+      ctx.moveTo(x - len / 2, cy);
+      ctx.lineTo(x + len / 2, cy);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x + len / 2, cy);
+      ctx.lineTo(x + len / 2 - 6, cy - 4);
+      ctx.moveTo(x + len / 2, cy);
+      ctx.lineTo(x + len / 2 - 6, cy + 4);
+      ctx.stroke();
+    });
+  }
+
+  function loop() { update(); draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+</script>
 
 </body>
 </html>

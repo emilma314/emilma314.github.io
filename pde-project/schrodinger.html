@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Schrödinger Equation — PDE Explorer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[
+    {left:'$$',right:'$$',display:true},
+    {left:'$',right:'$',display:false}
+  ]})"></script>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f7f7f5;
+  --border: #ddddd8;
+  --text: #1a1a1a;
+  --muted: #666660;
+  --accent: #7c3aed;
+  --accent-light: #f5f3ff;
+  --green: #16a34a;
+  --red: #dc2626;
+  --font: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.page-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  height: 52px;
+  padding: 0 2rem;
+}
+.nav-logo {
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+}
+.nav-links { display: flex; }
+.nav-links a {
+  text-decoration: none; color: var(--muted);
+  font-size: 0.85rem; font-weight: 500;
+  padding: 0.35rem 0.9rem; border-radius: 4px;
+  transition: 0.15s;
+}
+.nav-links a:hover { background: var(--bg2); color: var(--text); }
+.nav-links a.active { background: var(--accent-light); color: var(--accent); }
+
+.hero {
+  padding: 4rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-tag {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--accent); background: var(--accent-light);
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 2.6rem; font-weight: 600; line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.tagline { color: var(--muted); max-width: 620px; margin-bottom: 1.8rem; }
+.hero-eq {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 1.2rem 1.8rem;
+  border-radius: 0 6px 6px 0;
+  display: inline-block;
+}
+
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+h2 { font-family: var(--font-serif); font-size: 1.7rem; margin-bottom: 1rem; }
+h3 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.4rem; }
+p { margin-bottom: 1rem; color: #2a2a2a; }
+p:last-child { margin-bottom: 0; }
+
+.callout {
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 1.1rem 1.4rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+.callout.green {
+  background: #f0fdf4;
+  border-left-color: var(--green);
+}
+
+.eq-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1rem 1.4rem;
+  border-radius: 6px;
+  text-align: center;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+/* symbol table */
+.symbol-table {
+  width: 100%; border-collapse: collapse;
+  margin: 1.2rem 0; font-size: 0.9rem;
+}
+.symbol-table th {
+  text-align: left; padding: 0.5rem 0.8rem;
+  background: var(--bg2);
+  font-size: 0.78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.symbol-table td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.symbol-table tr:last-child td { border-bottom: none; }
+.symbol-table .sym { font-family: monospace; font-size: 0.9rem; }
+
+/* collapsible */
+.deriv-toggle {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.88rem; font-weight: 500;
+  font-family: var(--font);
+  cursor: pointer; color: var(--muted);
+  width: 100%; text-align: left;
+  transition: background 0.15s, color 0.15s;
+  margin: 1.5rem 0 0;
+}
+.deriv-toggle:hover { background: var(--bg2); color: var(--text); }
+.deriv-toggle .arrow { transition: transform 0.2s; font-size: 0.75rem; }
+.deriv-toggle.open .arrow { transform: rotate(90deg); }
+.deriv-body {
+  display: none;
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 1.5rem; background: var(--bg2);
+  margin-bottom: 1rem;
+}
+.deriv-body.open { display: block; }
+.deriv-step { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
+.deriv-step:last-child { margin-bottom: 0; }
+.step-n {
+  flex-shrink: 0; width: 26px; height: 26px;
+  background: var(--accent); color: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 600; margin-top: 3px;
+}
+.deriv-step p { font-size: 0.92rem; margin-bottom: 0.5rem; }
+
+/* diagram */
+.demo-wrap {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+.diagram-caption {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* applications grid */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.app-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.2rem;
+  background: var(--bg);
+}
+.app-card .tag {
+  font-size: 0.7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); margin-bottom: 0.5rem;
+}
+.app-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.app-card p { font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+.takeaways { padding-left: 1.3rem; line-height: 2.1; }
+
+footer {
+  border-top: 1px solid var(--border);
+  max-width: 780px; margin: 0 auto;
+  padding: 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1rem; flex-wrap: wrap;
+}
+footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.next-btn {
+  text-decoration: none; background: var(--accent); color: white;
+  padding: 0.5rem 1.1rem; border-radius: 5px;
+  font-size: 0.88rem; font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  nav { padding: 0 1rem; }
+  .page-wrap { padding: 0 1.2rem; }
+  .hero h1 { font-size: 2rem; }
+  .app-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">PDE Explorer</a>
+  <div class="nav-links">
+    <a href="continuity.html">Continuity</a>
+    <a href="wave.html">Wave</a>
+    <a href="schrodinger.html" class="active">Schrödinger</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="page-tag">Equation 3 of 3</div>
+    <h1>The Schrödinger Equation</h1>
+    <p class="tagline">
+      In quantum mechanics, particles don't have a definite position.
+      Instead they have a <em>wavefunction</em> — and this equation
+      describes how that wavefunction evolves over time.
+    </p>
+    <div class="hero-eq">
+      $$i\hbar\,\frac{\partial \psi}{\partial t}
+      = -\frac{\hbar^2}{2m}\nabla^2\psi + V\psi$$
+    </div>
+  </div>
+
+  <!-- WHAT IS A WAVEFUNCTION -->
+  <div class="section">
+    <h2>Step back: what is a wavefunction?</h2>
+    <p>
+      In classical physics, a particle has a definite position and velocity at every moment.
+      In quantum mechanics, that's not true. Before you measure it,
+      a particle doesn't <em>have</em> a definite position —
+      it exists in a kind of blur across space.
+    </p>
+    <p>
+      That blur is described by the <strong>wavefunction</strong> $\psi$ (psi).
+      It's a mathematical function that assigns a (complex) number to every point in space.
+      On its own, $\psi$ isn't directly measurable — but its square is:
+    </p>
+    <div class="callout">
+      <strong>$|\psi(x)|^2$ is the probability of finding the particle at position $x$.</strong>
+      <br>
+      Wherever $|\psi|^2$ is large, the particle is likely to be found there.
+      Wherever it's zero, the particle will never be found.
+    </div>
+    <p>
+      The Schrödinger equation is simply the rule that tells you
+      how $\psi$ changes over time — just like Newton's second law
+      tells you how position changes over time in classical mechanics.
+    </p>
+  </div>
+
+  <!-- WHAT DOES IT SAY -->
+  <div class="section">
+    <h2>What does the equation say?</h2>
+    <p>
+      Written out, the time-dependent Schrödinger equation is:
+    </p>
+    <div class="eq-block">
+      $$i\hbar\,\frac{\partial \psi}{\partial t}
+      = -\frac{\hbar^2}{2m}\nabla^2\psi + V\psi$$
+    </div>
+    <p>
+      The left side tracks how $\psi$ changes in time.
+      The right side computes the total energy of the particle —
+      kinetic energy (the $\nabla^2$ term) plus potential energy ($V$).
+      The equation is saying: <em>the time evolution of the wavefunction
+      is driven by the particle's total energy.</em>
+    </p>
+
+    <table class="symbol-table">
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>What it means</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sym">$\psi$</td>
+          <td>psi (wavefunction)</td>
+          <td>A complex-valued function of space and time.
+              Its square $|\psi|^2$ gives the probability of finding
+              the particle at a given location.</td>
+        </tr>
+        <tr>
+          <td class="sym">$i$</td>
+          <td>imaginary unit</td>
+          <td>$\sqrt{-1}$. Its presence is why $\psi$ must be complex,
+              and why the solutions oscillate rather than decay.</td>
+        </tr>
+        <tr>
+          <td class="sym">$\hbar$</td>
+          <td>h-bar</td>
+          <td>Planck's constant divided by $2\pi$.
+              An extremely small number ($\approx 10^{-34}$ J·s)
+              that sets the scale of quantum effects.</td>
+        </tr>
+        <tr>
+          <td class="sym">$m$</td>
+          <td>mass</td>
+          <td>The mass of the particle.</td>
+        </tr>
+        <tr>
+          <td class="sym">$\nabla^2\psi$</td>
+          <td>Laplacian of psi</td>
+          <td>Measures how curved $\psi$ is in space.
+              Highly curved wavefunctions correspond to high kinetic energy —
+              more "wiggles" means faster motion.</td>
+        </tr>
+        <tr>
+          <td class="sym">$V$</td>
+          <td>potential energy</td>
+          <td>The environment the particle is in. A box, a spring,
+              an atom's electric field — all encoded in $V(x)$.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="deriv-toggle" onclick="toggleDeriv(this)">
+      <span class="arrow">▶</span> Show me where this equation comes from
+    </button>
+    <div class="deriv-body">
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.2rem;">
+        Schrödinger's original argument was partly heuristic — more of an educated guess
+        guided by wave mechanics and the de Broglie relations.
+        Here's the logic:
+      </p>
+      <div class="deriv-step">
+        <div class="step-n">1</div>
+        <div>
+          <p>Start from classical energy conservation. For a particle with momentum $p$ and potential $V$:</p>
+          <div class="eq-block">$$E = \frac{p^2}{2m} + V$$</div>
+        </div>
+      </div>
+      <div class="deriv-step">
+        <div class="step-n">2</div>
+        <div>
+          <p>
+            De Broglie (1924) proposed that particles have wave-like properties.
+            For a plane wave $\psi = e^{i(kx - \omega t)}$, differentiating gives:
+          </p>
+          <div class="eq-block">$$\frac{\partial \psi}{\partial t} = -i\omega\psi \implies E = \hbar\omega \implies E\psi = i\hbar\frac{\partial\psi}{\partial t}$$</div>
+          <div class="eq-block">$$\frac{\partial^2\psi}{\partial x^2} = -k^2\psi \implies p = \hbar k \implies p^2\psi = -\hbar^2\frac{\partial^2\psi}{\partial x^2}$$</div>
+        </div>
+      </div>
+      <div class="deriv-step">
+        <div class="step-n">3</div>
+        <div>
+          <p>
+            Substitute these operator replacements into the energy equation $E = p^2/2m + V$:
+          </p>
+          <div class="eq-block">$$i\hbar\frac{\partial\psi}{\partial t} = -\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial x^2} + V\psi$$</div>
+          <p>
+            In 3D, $\partial^2/\partial x^2$ becomes $\nabla^2$, giving the full equation.
+            This is ultimately a <em>postulate</em> — we trust it because its predictions
+            match experiments with extraordinary precision.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGRAM: ENERGY LEVELS -->
+  <div class="section">
+    <h2>Energy levels in a box</h2>
+    <p>
+      One of the most striking results of the Schrödinger equation is <strong>quantization</strong>:
+      a particle trapped in a box can only have certain specific energies.
+      It can't have any energy it wants — only the allowed levels.
+    </p>
+    <p>
+      Each allowed energy comes with a specific wavefunction shape.
+      Higher energy means more wiggles. The number of wiggles
+      is called the <strong>quantum number</strong> $n$.
+    </p>
+
+    <div class="demo-wrap">
+      <svg width="100%" viewBox="0 0 700 400" style="display:block; font-family: Inter, sans-serif;">
+
+        <!-- Background -->
+        <rect x="0" y="0" width="700" height="400" rx="10" fill="#fafaf9" stroke="#ddddd8"/>
+
+        <!-- Box walls -->
+        <line x1="100" y1="20" x2="100" y2="380" stroke="#374151" stroke-width="4" stroke-linecap="round"/>
+        <line x1="600" y1="20" x2="600" y2="380" stroke="#374151" stroke-width="4" stroke-linecap="round"/>
+
+        <!-- floor label -->
+        <text x="350" y="398" text-anchor="middle" font-size="13" fill="#9ca3af">infinitely tall walls — particle can never escape</text>
+
+        <!-- ── n=1 level ── -->
+        <!-- Energy baseline -->
+        <line x1="100" y1="340" x2="600" y2="340" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- Wavefunction: one half-sine, amplitude 38px up from baseline -->
+        <path d="M100,340
+          C160,340 160,270 205,270
+          C250,270 250,232 350,232
+          C450,270 450,270 495,270
+          C540,270 540,340 600,340"
+          fill="none" stroke="#7c3aed" stroke-width="2.5" opacity="0.85"/>
+        <!-- Shaded area under curve -->
+        <path d="M100,340
+          C160,340 160,270 205,270
+          C250,270 250,232 350,232
+          C450,270 450,270 495,270
+          C540,270 540,340 600,340 Z"
+          fill="#7c3aed" opacity="0.08"/>
+        <!-- Label -->
+        <text x="625" y="335" font-size="14" fill="#7c3aed" font-weight="600">n = 1</text>
+        <text x="625" y="352" font-size="12" fill="#9ca3af">lowest energy</text>
+
+        <!-- ── n=2 level ── -->
+        <line x1="100" y1="230" x2="600" y2="230" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- two half-sines -->
+        <path d="M100,230
+          C130,230 140,175 175,165
+          C210,155 220,195 250,195
+          C280,195 290,230 350,230
+          C410,230 420,265 450,265
+          C480,265 490,210 525,200
+          C560,190 570,230 600,230"
+          fill="none" stroke="#2563eb" stroke-width="2.5" opacity="0.85"/>
+        <path d="M100,230
+          C130,230 140,175 175,165
+          C210,155 220,195 250,195
+          C280,195 290,230 350,230
+          C410,230 420,265 450,265
+          C480,265 490,210 525,200
+          C560,190 570,230 600,230 Z"
+          fill="#2563eb" opacity="0.07"/>
+        <text x="625" y="225" font-size="14" fill="#2563eb" font-weight="600">n = 2</text>
+        <text x="625" y="242" font-size="12" fill="#9ca3af">4× more energy</text>
+
+        <!-- ── n=3 level ── -->
+        <line x1="100" y1="120" x2="600" y2="120" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4,4"/>
+        <!-- three half-sines -->
+        <path d="M100,120
+          C118,120 122,82 141,75
+          C161,68 165,100 183,102
+          C202,104 206,120 233,120
+          C261,120 265,138 283,145
+          C302,152 306,120 350,120
+          C394,120 398,90 416,83
+          C435,76 439,108 457,110
+          C476,112 480,120 517,120
+          C554,120 558,148 576,153
+          C595,158 598,120 600,120"
+          fill="none" stroke="#16a34a" stroke-width="2.5" opacity="0.85"/>
+        <path d="M100,120
+          C118,120 122,82 141,75
+          C161,68 165,100 183,102
+          C202,104 206,120 233,120
+          C261,120 265,138 283,145
+          C302,152 306,120 350,120
+          C394,120 398,90 416,83
+          C435,76 439,108 457,110
+          C476,112 480,120 517,120
+          C554,120 558,148 576,153
+          C595,158 598,120 600,120 Z"
+          fill="#16a34a" opacity="0.08"/>
+        <text x="625" y="115" font-size="14" fill="#16a34a" font-weight="600">n = 3</text>
+        <text x="625" y="132" font-size="12" fill="#9ca3af">9× more energy</text>
+
+        <!-- Energy axis arrow -->
+        <line x1="60" y1="370" x2="60" y2="50" stroke="#9ca3af" stroke-width="1.5"/>
+        <polygon points="60,42 54,58 66,58" fill="#9ca3af"/>
+        <text x="57" y="210" text-anchor="middle" font-size="12" fill="#9ca3af"
+          transform="rotate(-90, 57, 210)">Energy</text>
+
+        <!-- Energy level tick marks -->
+        <line x1="55" y1="340" x2="65" y2="340" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="55" y1="230" x2="65" y2="230" stroke="#9ca3af" stroke-width="1.5"/>
+        <line x1="55" y1="120" x2="65" y2="120" stroke="#9ca3af" stroke-width="1.5"/>
+
+        <!-- E labels -->
+        <text x="44" y="344" text-anchor="end" font-size="12" fill="#7c3aed">E₁</text>
+        <text x="44" y="234" text-anchor="end" font-size="12" fill="#2563eb">E₂</text>
+        <text x="44" y="124" text-anchor="end" font-size="12" fill="#16a34a">E₃</text>
+
+        <!-- "more wiggles = more energy" annotation -->
+        <text x="350" y="55" text-anchor="middle" font-size="13" fill="#6b7280">
+          more wiggles = higher energy
+        </text>
+        <line x1="280" y1="48" x2="200" y2="100" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="420" y1="48" x2="500" y2="100" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,3"/>
+
+      </svg>
+
+      <div class="diagram-caption">
+        A particle trapped between two walls. Each row is an allowed energy state.<br>
+        The curve shows the wavefunction $\psi$ — squaring it gives the probability of finding the particle there.<br>
+        <strong>There is no state between these levels.</strong> The particle must jump from one to another.
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECTION TO CONTINUITY -->
+  <div class="section">
+    <h2>Connection to the continuity equation</h2>
+    <p>
+      Remember the continuity equation from the first page?
+      It turns out the Schrödinger equation automatically satisfies it.
+    </p>
+    <p>
+      If you define the probability density $\rho = |\psi|^2$ and work through the math,
+      you can show that $\rho$ satisfies:
+    </p>
+    <div class="eq-block">
+      $$\frac{\partial |\psi|^2}{\partial t} + \nabla \cdot \mathbf{J} = 0$$
+    </div>
+    <div class="callout green">
+      <strong>This means probability is conserved.</strong>
+      The total probability of finding the particle <em>somewhere</em>
+      stays exactly 1 for all time — the particle doesn't vanish.
+      This isn't assumed; it falls directly out of the Schrödinger equation.
+    </div>
+  </div>
+
+  <!-- WHERE IT SHOWS UP -->
+  <div class="section">
+    <h2>What does this equation explain?</h2>
+    <p>
+      The Schrödinger equation is the foundation of all of modern chemistry and much of physics.
+      Here are three things it directly predicts:
+    </p>
+    <div class="app-grid">
+      <div class="app-card">
+        <div class="tag">Chemistry</div>
+        <h4>Atomic orbitals</h4>
+        <p>The shapes of electron clouds in atoms — s, p, d orbitals —
+           are solutions to the Schrödinger equation for the hydrogen potential.</p>
+      </div>
+      <div class="app-card">
+        <div class="tag">Semiconductors</div>
+        <h4>Transistors &amp; LEDs</h4>
+        <p>The band structure of silicon and the behavior of electrons in
+           semiconductors all follow from applying this equation to crystal lattices.</p>
+      </div>
+      <div class="app-card">
+        <div class="tag">Quantum computing</div>
+        <h4>Qubits</h4>
+        <p>A qubit is just a quantum system with two energy levels.
+           Its evolution is governed directly by the Schrödinger equation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAKEAWAYS -->
+  <div class="section">
+    <h2>Key takeaways</h2>
+    <ul class="takeaways">
+      <li>Particles in quantum mechanics don't have definite positions — they have wavefunctions.</li>
+      <li>$|\psi|^2$ gives the probability of finding the particle at a given point.</li>
+      <li>The Schrödinger equation tells you how $\psi$ evolves over time.</li>
+      <li>A trapped particle can only have certain discrete energies — it's quantized.</li>
+      <li>Higher energy states have more "wiggles" in their wavefunction.</li>
+      <li>Probability is automatically conserved — the particle never disappears.</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <p>Based on Hassani, <em>Mathematical Methods for Students of Physics</em>, 2nd ed. (2009)</p>
+  <a href="wave.html" class="next-btn">← Wave Equation</a>
+</footer>
+
+<script>
+function toggleDeriv(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
