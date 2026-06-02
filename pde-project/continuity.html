@@ -166,12 +166,12 @@ p:last-child { margin-bottom: 0; }
 .deriv-toggle .arrow { transition: transform 0.2s; font-size: 0.75rem; }
 .deriv-toggle.open .arrow { transform: rotate(90deg); }
 .deriv-body {
-  display: none;
-  border: 1px solid var(--border); border-top: none;
-  border-radius: 0 0 6px 6px;
-  padding: 1.5rem; background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  background: var(--bg2);
+  margin-top: 1rem;
 }
-.deriv-body.open { display: block; }
 .deriv-step { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
 .deriv-step:last-child { margin-bottom: 0; }
 .step-n {
@@ -257,7 +257,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
   <!-- WHAT DOES IT SAY -->
   <div class="section">
-    <h2>What does it say?</h2>
+    <h2>The Equation</h2>
     <p>
       The continuity equation is a <strong>conservation law</strong>.
       It says that whatever you're tracking (e.g. mass, charge, probability, etc.)
@@ -293,7 +293,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       <tbody>
         <tr>
           <td class="sym">$\rho$</td>
-          <td>rho — density</td>
+          <td>Density (rho)</td>
           <td>
             How densely "stuff" is packed into a tiny region.
             For fluids, density is mass per volume. In electromagnetism it's charge per volume.
@@ -302,7 +302,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
         </tr>
         <tr>
           <td class="sym">$\mathbf{J}$</td>
-          <td>J — flux</td>
+          <td>Flux</td>
           <td>
             A vector that describes the flow of stuff. The magnitude and direction of the vector describe how much is flowing, 
             and in what direction, respectively.
@@ -321,7 +321,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
           <td class="sym">$\nabla \cdot \mathbf{J}$</td>
           <td>divergence of J</td>
           <td>
-            How much the flow is "spreading out" from a point — see below.
+            How much the flow is "spreading out" from a point (see below).
           </td>
         </tr>
       </tbody>
@@ -336,7 +336,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       Imagine standing in the middle of a room watching people walk around you:
     </p>
     <div class="eq-block" style="text-align:left; padding: 1.2rem 1.8rem;">
-      <strong>Positive divergence</strong>: everyone near you is walking away.
+      <strong>Positive divergence</strong>: everyone near you is walking away (perhaps you smell funny).
       The flow is spreading out, so whatever is here is leaving.
       Density here will decrease.<br><br>
       <strong>Negative divergence</strong>: everyone is walking toward you.
@@ -349,12 +349,11 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       They always balance exactly.
     </p>
 
-    <button class="deriv-toggle" onclick="toggleDeriv(this)">
-      <span class="arrow">▶</span> Show me the derivation (requires multivariable calculus)
-    </button>
-    <div class="deriv-body">
+    <h2 style="margin-top:2.5rem;">Derivation</h2>
+
+      <div class="deriv-body">
       <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.2rem;">
-        The formal proof uses only one key theorem from calculus — the divergence theorem.
+        The formal proof uses only one key theorem from calculus: the divergence theorem.
       </p>
       <div class="deriv-step">
         <div class="step-n">1</div>
@@ -388,7 +387,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
           <p>Combining everything:</p>
           <div class="eq-block">$$\int_V \!\left(\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J}\right) dV = 0$$</div>
           <p>
-            This must hold for <em>every</em> possible volume $V$.
+            This must hold for every possible volume $V$.
             The only way that works is if the integrand itself is zero everywhere:
           </p>
           <div class="eq-block">$$\frac{\partial \rho}{\partial t} + \nabla \cdot \mathbf{J} = 0$$</div>
@@ -466,10 +465,6 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 </footer>
 
 <script>
-function toggleDeriv(btn) {
-  btn.classList.toggle('open');
-  btn.nextElementSibling.classList.toggle('open');
-}
 
 // ── PIPE SIMULATION ─────────────────────────────────────────────
 (function () {
