@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Continuity Equation — PDE Explorer</title>
+<title>The Continuity Equation: Emil IS</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -232,7 +232,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">PDE Explorer</a>
+  <a class="nav-logo" href="#">Emil Partial Differential Equations Independent Study Presentation</a>
   <div class="nav-links">
     <a href="continuity.html" class="active">Continuity</a>
     <a href="wave.html">Wave</a>
@@ -260,14 +260,13 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
     <h2>What does it say?</h2>
     <p>
       The continuity equation is a <strong>conservation law</strong>.
-      It says that whatever you're tracking —
-      mass, charge, probability, people —
+      It says that whatever you're tracking (e.g. mass, charge, probability, etc.)
       cannot spontaneously appear or vanish.
-      It can only move from place to place.
+      It must move from place to place.
     </p>
     <div class="callout">
       <strong>If more stuff flows out of a tiny region than flows in,
-      the amount inside must decrease — by exactly that much.</strong>
+      the amount inside must decrease by exactly that much.</strong>
     </div>
     <p>
       Rearranged, the equation says:
@@ -296,8 +295,8 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
           <td class="sym">$\rho$</td>
           <td>rho — density</td>
           <td>
-            How much "stuff" is packed into a tiny region at a given point in space.
-            In a fluid it's mass per volume. In electromagnetism it's charge per volume.
+            How densely "stuff" is packed into a tiny region.
+            For fluids, density is mass per volume. In electromagnetism it's charge per volume.
             In quantum mechanics it's probability per volume.
           </td>
         </tr>
@@ -305,17 +304,17 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
           <td class="sym">$\mathbf{J}$</td>
           <td>J — flux</td>
           <td>
-            A vector that describes the flow of stuff. It has both a magnitude
-            (how much is flowing) and a direction (which way).
-            Think of it as an arrow attached to every point in space, showing the current.
+            A vector that describes the flow of stuff. The magnitude and direction of the vector describe how much is flowing, 
+            and in what direction, respectively.
+            You can think of it as an arrow attached to every point in space, showing the current.
           </td>
         </tr>
         <tr>
           <td class="sym">$\partial \rho / \partial t$</td>
           <td>time derivative of ρ</td>
           <td>
-            How fast the density is changing right now at this point.
-            Negative means density is dropping; positive means it's growing.
+            How fast the density is changing at a certain point in time.
+            Negative means density is dropping. Positive means it's growing.
           </td>
         </tr>
         <tr>
@@ -330,23 +329,19 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
     <h3>What is divergence?</h3>
     <p>
-      Divergence is the trickiest symbol in the equation, so it's worth pausing on.
       $\nabla \cdot \mathbf{J}$ at a point measures whether the flow arrows near that
-      point are <em>spreading outward</em> or <em>converging inward</em>.
+      point are spreading outward or converging inward.
     </p>
     <p>
       Imagine standing in the middle of a room watching people walk around you:
     </p>
     <div class="eq-block" style="text-align:left; padding: 1.2rem 1.8rem;">
-      <strong>Positive divergence</strong> — everyone near you is walking away.
-      Like standing at the center of an explosion.
+      <strong>Positive divergence</strong>: everyone near you is walking away.
       The flow is spreading out, so whatever is here is leaving.
-      Density here will <em>decrease</em>.<br><br>
-      <strong>Negative divergence</strong> — everyone is walking toward you.
-      Like a drain pulling things in.
-      Stuff is converging, so density here will <em>increase</em>.<br><br>
-      <strong>Zero divergence</strong> — as much flows in as flows out.
-      Density stays the same.
+      Density here will decrease.<br><br>
+      <strong>Negative divergence</strong>: everyone is walking toward you.
+      Like a drain pulling things in. Stuff is converging, so density here will increase.<br><br>
+      <strong>Zero divergence</strong>: as much flows in as flows out. Density stays the same.
     </div>
     <p>
       The continuity equation says these two things are always linked:
@@ -404,7 +399,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
   <!-- PIPE SIM -->
   <div class="section">
-    <h2>See it in action</h2>
+    <h2>Demo</h2>
     <p>
       Water flows through a pipe with a narrow section in the middle.
       Because water can't appear or disappear, squeezing into a narrower pipe
@@ -412,8 +407,8 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       When the pipe widens again, they spread out and slow down.
     </p>
     <p>
-      This is the continuity equation made visible: the density and
-      the flow speed always adjust together so that nothing is created or lost.
+      This is an example of the continuity equation: the density and
+      the flow speed adjust so that matter isn't created or lost.
     </p>
 
     <div class="demo-wrap">
@@ -428,7 +423,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
   <!-- WHERE IT APPEARS -->
   <div class="section">
-    <h2>Where does this appear?</h2>
+    <h2>Applications</h2>
     <p>
       The exact same PDE appears across physics with different interpretations
       of $\rho$ and $\mathbf{J}$.
@@ -446,9 +441,8 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
     <p style="margin-top:1rem;">
       In quantum mechanics this is especially striking: the Schrödinger equation
-      (which we cover on the next page) <em>automatically</em> satisfies the
-      continuity equation. That's how we know the total probability of finding a
-      particle always stays at 1 — it falls out of the math, not as an assumption.
+      (which we cover on the third page) <em>automatically</em> satisfies the
+      continuity equation. Keep reading to find out more!
     </p>
   </div>
 
@@ -456,7 +450,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
   <div class="section">
     <h2>Key takeaways</h2>
     <ul class="takeaways">
-      <li>The continuity equation expresses conservation — nothing appears or disappears.</li>
+      <li>The continuity equation expresses conservation (nothing appears or disappears).</li>
       <li>$\rho$ is density; $\mathbf{J}$ is the flux vector showing how stuff flows.</li>
       <li>Positive divergence means flow is spreading outward → density decreases.</li>
       <li>Negative divergence means flow is converging inward → density increases.</li>

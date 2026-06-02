@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Schrödinger Equation — PDE Explorer</title>
+<title>The Schrödinger Equation: Emil IS</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -252,7 +252,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 <body>
 
 <nav>
-  <a class="nav-logo" href="#">PDE Explorer</a>
+  <a class="nav-logo" href="#">Emil Partial Differential Equations Independent Study Presentation</a>
   <div class="nav-links">
     <a href="continuity.html">Continuity</a>
     <a href="wave.html">Wave</a>
@@ -267,8 +267,8 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
     <div class="page-tag">Equation 3 of 3</div>
     <h1>The Schrödinger Equation</h1>
     <p class="tagline">
-      In quantum mechanics, particles don't have a definite position.
-      Instead they have a <em>wavefunction</em> — and this equation
+      In quantum mechanics, particles don't have definite positions.
+      Instead they have a wavefunction that describes where they are likely to be found once measured. The Schrödinger equation
       describes how that wavefunction evolves over time.
     </p>
     <div class="hero-eq">
@@ -279,34 +279,25 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
 
   <!-- WHAT IS A WAVEFUNCTION -->
   <div class="section">
-    <h2>Step back: what is a wavefunction?</h2>
+    <h2>Wavefunctions</h2>
     <p>
-      In classical physics, a particle has a definite position and velocity at every moment.
-      In quantum mechanics, that's not true. Before you measure it,
-      a particle doesn't <em>have</em> a definite position —
-      it exists in a kind of blur across space.
-    </p>
-    <p>
-      That blur is described by the <strong>wavefunction</strong> $\psi$ (psi).
-      It's a mathematical function that assigns a (complex) number to every point in space.
-      On its own, $\psi$ isn't directly measurable — but its square is:
+      The wavefunction $\psi$ (psi), is a mathematical function that assigns a (complex) number to every point in space. 
     </p>
     <div class="callout">
       <strong>$|\psi(x)|^2$ is the probability of finding the particle at position $x$.</strong>
       <br>
-      Wherever $|\psi|^2$ is large, the particle is likely to be found there.
-      Wherever it's zero, the particle will never be found.
+      $|\psi|^2$ is bounded between 0 (no chance of observing the particle) and 1 (complete certainty of observing the particle) at each location.
     </div>
     <p>
-      The Schrödinger equation is simply the rule that tells you
-      how $\psi$ changes over time — just like Newton's second law
-      tells you how position changes over time in classical mechanics.
+      The Schrödinger equation describes 
+      how $\psi$ changes over time, analogously to how Newton's second law
+      describes how position changes over time in classical mechanics.
     </p>
   </div>
 
   <!-- WHAT DOES IT SAY -->
   <div class="section">
-    <h2>What does the equation say?</h2>
+    <h2>Dissecting the Equation</h2>
     <p>
       Written out, the time-dependent Schrödinger equation is:
     </p>
@@ -318,8 +309,8 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
       The left side tracks how $\psi$ changes in time.
       The right side computes the total energy of the particle —
       kinetic energy (the $\nabla^2$ term) plus potential energy ($V$).
-      The equation is saying: <em>the time evolution of the wavefunction
-      is driven by the particle's total energy.</em>
+      Thus, the equation says that the time evolution of the wavefunction
+      is driven by the particle's total energy.
     </p>
 
     <table class="symbol-table">
@@ -359,15 +350,14 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
         <tr>
           <td class="sym">$\nabla^2\psi$</td>
           <td>Laplacian of psi</td>
-          <td>Measures how curved $\psi$ is in space.
-              Highly curved wavefunctions correspond to high kinetic energy —
-              more "wiggles" means faster motion.</td>
+          <td>Measures how curved $\psi$ is in space, a higher dimensional generalization of the second derivative.
+              Highly curved wavefunctions correspond to high kinetic energy, meaning that a more "wiggly" wavefunction generally means faster motion.</td>
         </tr>
         <tr>
           <td class="sym">$V$</td>
           <td>potential energy</td>
           <td>The environment the particle is in. A box, a spring,
-              an atom's electric field — all encoded in $V(x)$.</td>
+              or an atom's electric field are all encoded in $V(x)$.</td>
         </tr>
       </tbody>
     </table>
@@ -377,7 +367,7 @@ footer p { margin: 0; font-size: 0.8rem; color: var(--muted); }
     </button>
     <div class="deriv-body">
       <p style="font-size:0.88rem;color:var(--muted);margin-bottom:1.2rem;">
-        Schrödinger's original argument was partly heuristic — more of an educated guess
+        Schrödinger's original argument was partly heuristic, more of an educated guess
         guided by wave mechanics and the de Broglie relations.
         Here's the logic:
       </p>
