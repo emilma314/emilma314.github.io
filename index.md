@@ -1,16 +1,16 @@
 ---
-layout: page
+layout: home
 title: Home
 ---
 
-# Emil Ma
+# Hi, I'm Emil
 
-I’m interested in physics, computation, and applied mathematics, with a
-focus on understanding complex systems through data and theory.
+Short bio here. adding some stuff
 
-## Projects
 
-- **[Gravitational Waves and Strain](gravitational-waves-project/)**
-  Visualization and analysis of LIGO gravitational-wave data.
+## Music
+[embed videos]
 
-(More projects coming.)
+## Work
+
+work
