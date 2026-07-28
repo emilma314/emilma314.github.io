@@ -1,13 +1,10 @@
 ---
 layout: home
-title: Home
+title: Emil Ma
 ---
 
 # Hi, I'm Emil
 
-<<<<<<< HEAD
-Short bio here. adding some stuff
-=======
 I'm <span id="age-display">18</span> years old.
 
 <script>
@@ -21,27 +18,15 @@ function updateAge() {
 updateAge();
 setInterval(updateAge, 100);
 </script>
->>>>>>> master
-
 
 ## Music
 [embed videos]
 
-<<<<<<< HEAD
 ## Work
-
-work
-=======
-
-
-## Work
-
 work
 
 ## Chess
-
 <div id="chess-stats">Loading chess.com ratings...</div>
-
 <script>
 fetch('https://api.chess.com/pub/player/limeboi314159/stats')
   .then(res => res.json())
@@ -49,7 +34,6 @@ fetch('https://api.chess.com/pub/player/limeboi314159/stats')
     const rapid = data.chess_rapid?.last?.rating ?? 'N/A';
     const blitz = data.chess_blitz?.last?.rating ?? 'N/A';
     const bullet = data.chess_bullet?.last?.rating ?? 'N/A';
-
     document.getElementById('chess-stats').innerHTML = `
       <ul>
         <li><strong>Rapid:</strong> ${rapid}</li>
@@ -62,4 +46,3 @@ fetch('https://api.chess.com/pub/player/limeboi314159/stats')
     document.getElementById('chess-stats').innerText = 'Could not load chess.com stats.';
   });
 </script>
->>>>>>> master
